@@ -4,6 +4,11 @@ This fork is supposed provide a platform for working on the Finnish translations
 
 Check out [MathCAT's documentation for helping with the translations](https://nsoiffer.github.io/MathCAT/helpers.html).
 
+## State of the project
+- [ ] Finnish translations for math speech
+- [ ] Finnish translations for math braille
+  - Reguires development of new standards
+
 ## MathCAT: Math Capable Assistive Technology
 <img src="logo.png" style="position: relative; top: 16px; z-index: -1;">
 is a library that supports conversion of MathML to:
