@@ -2,6 +2,8 @@
 
 This fork is supposed provide a platform for working on the Finnish translations for the main  [MathCAT project (GitHub)](https://nsoiffer.github.io/MathCAT/).
 
+Check out [MathCAT's documentation for helping with the translations](https://nsoiffer.github.io/MathCAT/helpers.html).
+
 ## MathCAT: Math Capable Assistive Technology
 <img src="logo.png" style="position: relative; top: 16px; z-index: -1;">
 is a library that supports conversion of MathML to:
