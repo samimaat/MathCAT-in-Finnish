@@ -348,7 +348,6 @@ pub fn replace_children<'a>(mathml: Element<'a>, replacements: Vec<Element<'a>>)
 		let mut replacements = replacements.iter().map(|&el| ChildOfElement::Element(el)).collect::<Vec<ChildOfElement>>();
 		new_children.append(&mut replacements);
 		new_children.append(&mut mathml.following_siblings());
-		let parent = mathml.parent().unwrap().element().unwrap();
 		parent.replace_children(new_children);
 		return as_element(parent.children()[i_first_new_child]);
 	}
@@ -456,6 +455,7 @@ impl CanonicalizeContext {
 		}
 		CanonicalizeContext::assure_mathml(mathml)?;
 		let mathml = self.clean_mathml(mathml).unwrap();	// 'math' is never removed
+		self.assure_math_not_empty(mathml);
 		self.assure_nary_tag_has_mrow(mathml);
 		let mut converted_mathml = self.canonicalize_mrows(mathml)
 				.chain_err(|| format!("while processing\n{}", mml_to_string(&mathml)))?;
@@ -467,6 +467,15 @@ impl CanonicalizeContext {
 		}
 		debug!("\nMathML after canonicalize:\n{}", mml_to_string(&converted_mathml));
 		return Ok(converted_mathml);
+	}
+	
+	/// Make sure there is some content inside the <math> tag
+	fn assure_math_not_empty(&self, mathml: Element) {
+		assert_eq!(name(&mathml), "math");
+		if mathml.children().is_empty() {
+			let child = CanonicalizeContext::create_empty_element(&mathml.document());
+			mathml.append_child(child);
+		}
 	}
 	
 	fn assure_nary_tag_has_mrow(&self, mathml: Element) {
@@ -543,6 +552,26 @@ impl CanonicalizeContext {
 		return Ok( () );
 	}
 
+	fn make_empty_element(mathml: Element) -> Element {
+		set_mathml_name(mathml, "mtext");
+		mathml.clear_children();
+		mathml.set_text("\u{A0}");
+		mathml.set_attribute_value("data-changed", "empty_content");
+		return mathml;
+	}
+	
+	fn create_empty_element<'a>(doc: &Document<'a>) -> Element<'a> {
+		let mtext = create_mathml_element(doc, "mtext");
+		mtext.set_text("\u{A0}");
+		mtext.set_attribute_value("data-added", "missing-content");
+		return mtext;
+	}
+	
+	fn is_empty_element(el: Element) -> bool {
+		return (is_leaf(el) && as_text(el).trim().is_empty()) ||
+			   (name(&el) == "mrow" && el.children().is_empty());
+	}
+
 	/// This function does some cleanup of MathML (mostly fixing bad MathML)
 	/// Unlike the main canonicalization routine, significant tree changes happen here
 	/// Changes to "good" MathML:
@@ -584,7 +613,7 @@ impl CanonicalizeContext {
 			if !parent_requires_child {
 				return None;
 			}
-			make_empty_element(mathml);
+			CanonicalizeContext::make_empty_element(mathml);
 		};
 		
 		if mathml.children().is_empty() && !EMPTY_ELEMENTS.contains(element_name) {
@@ -595,14 +624,14 @@ impl CanonicalizeContext {
 						set_mathml_name(mathml, "none");
 						return Some(mathml);
 					} else {
-						return Some( make_empty_element(mathml) );
+						return Some( CanonicalizeContext::make_empty_element(mathml) );
 					}
 				} else {
 					return None;
 				}
 			} else {
 				// create some content so that speech rules don't require special cases
-				let mtext = create_empty_element(&mathml.document());
+				let mtext = CanonicalizeContext::create_empty_element(&mathml.document());
 				mathml.append_child(mtext);
 				// return Some(mathml);
 			}
@@ -678,7 +707,7 @@ impl CanonicalizeContext {
 				let mathml = mathml;
 				if IS_WHITESPACE.is_match(text) {
 					// normalize to just a single non-breaking space
-					make_empty_element(mathml);
+					CanonicalizeContext::make_empty_element(mathml);
 				} else if let Some(dash) = canonicalize_dash(text) {
 					mathml.set_text(dash);
 				} else if OPERATORS.get(text).is_some() {
@@ -728,7 +757,7 @@ impl CanonicalizeContext {
 				if children.is_empty() {
 					if parent_requires_child {
 						// need a placeholder -- make it empty mtext
-						return Some( make_empty_element(mathml));
+						return Some( CanonicalizeContext::make_empty_element(mathml));
 					} else {
 						return None;
 					}
@@ -742,7 +771,7 @@ impl CanonicalizeContext {
 						return Some(mathml);
 					} else if parent_requires_child {
 						// need a placeholder -- make it empty mtext
-						return Some( make_empty_element(mathml));
+						return Some( CanonicalizeContext::make_empty_element(mathml));
 					} else {
 						return None;
 					}
@@ -755,7 +784,7 @@ impl CanonicalizeContext {
 			},
 			"mphantom" | "malignmark" | "maligngroup"=> {
 				if parent_requires_child {
-					return Some( make_empty_element(mathml));
+					return Some( CanonicalizeContext::make_empty_element(mathml));
 				} else {
 					return None;
 				}
@@ -766,7 +795,7 @@ impl CanonicalizeContext {
 				if is_width_ignorable(width)  {		// testing <= 0 -- could do better
 					return None;
 				}
-				return Some( make_empty_element(mathml));
+				return Some( CanonicalizeContext::make_empty_element(mathml));
 			},
 			"semantics" => {
 				// clean the presentation child but leave the annotations in case they want to be used by the rules.
@@ -778,7 +807,7 @@ impl CanonicalizeContext {
 					presentation
 				} else {
 					// probably shouldn't happen, but just in case
-					create_empty_element(&mathml.document())
+					CanonicalizeContext::create_empty_element(&mathml.document())
 				};
 				if i==0 {
 					// common case, so optimize
@@ -806,7 +835,7 @@ impl CanonicalizeContext {
 							add_attrs(mathml, new_mathml.attributes());
 							return Some(mathml);
 						} else if parent_requires_child {
-							let empty = make_empty_element(mathml);
+							let empty = CanonicalizeContext::make_empty_element(mathml);
 							if is_from_mhchem {
 								empty.set_attribute_value(MHCHEM_MMULTISCRIPTS_HACK, "true");
 							}
@@ -876,10 +905,10 @@ impl CanonicalizeContext {
 						  element_name == "msubsup" || element_name == "mmultiscripts"{
 					if element_name != "mmultiscripts" {
 						// mhchem emits some cases that boil down to a completely empty script -- see test mhchem_beta_decay
-						let mut is_empty_script = is_empty_element(as_element(children[0])) &&
-						   								is_empty_element(as_element(children[1]));
+						let mut is_empty_script = CanonicalizeContext::is_empty_element(as_element(children[0])) &&
+						   								CanonicalizeContext::is_empty_element(as_element(children[1]));
 						if element_name == "msubsup" {
-							is_empty_script = is_empty_element(as_element(children[2]));
+							is_empty_script = CanonicalizeContext::is_empty_element(as_element(children[2]));
 						}
 						if is_empty_script {
 							if parent_requires_child {
@@ -983,27 +1012,6 @@ impl CanonicalizeContext {
 			return false;
 		}
 
-
-		fn make_empty_element(mathml: Element) -> Element {
-			set_mathml_name(mathml, "mtext");
-			mathml.clear_children();
-			mathml.set_text("\u{A0}");
-			mathml.set_attribute_value("data-changed", "empty_content");
-			return mathml;
-		}
-		
-		fn create_empty_element<'a>(doc: &Document<'a>) -> Element<'a> {
-			let mtext = create_mathml_element(doc, "mtext");
-			mtext.set_text("\u{A0}");
-			mtext.set_attribute_value("data-added", "missing-content");
-			return mtext;
-		}
-		
-		fn is_empty_element(el: Element) -> bool {
-			return (is_leaf(el) && as_text(el).trim().is_empty()) ||
-				   (name(&el) == "mrow" && el.children().is_empty());
-		}
-
 		fn clean_chemistry_leaf(mathml: Element) -> Element {
 			if !(is_chemistry_off() || mathml.attribute(MAYBE_CHEMISTRY).is_some()) {
 				assert!(name(&mathml)=="mi" || name(&mathml)=="mtext");
@@ -1051,7 +1059,7 @@ impl CanonicalizeContext {
 					let child_name = name(&child);
 					if child_name == "mprescripts" {
 						if has_misplaced_mprescripts {
-							let mtext = create_empty_element(&mathml.document());
+							let mtext = CanonicalizeContext::create_empty_element(&mathml.document());
 							new_children.push(ChildOfElement::Element(mtext));
 							has_proper_number_of_children = !has_proper_number_of_children;
 						}
@@ -1710,7 +1718,7 @@ impl CanonicalizeContext {
 			while i < children.len() {
 				let child = as_element(children[i]);
 				let child_name = name(&child);
-				if (child_name == "msub" || child_name == "msup" || child_name == "msubsup") && is_empty_element(as_element(child.children()[0])) {
+				if (child_name == "msub" || child_name == "msup" || child_name == "msubsup") && CanonicalizeContext::is_empty_element(as_element(child.children()[0])) {
 					i = convert_to_mmultiscripts(children, i);
 				} else {
 					i += 1;
@@ -1743,11 +1751,11 @@ impl CanonicalizeContext {
 			let mut i_postscript = i_base + 1;
 
 			if (base_name == "msub" || base_name == "msup" || base_name == "msubsup") &&
-			   !is_empty_element(as_element(base.children()[0])) {
+			   !CanonicalizeContext::is_empty_element(as_element(base.children()[0])) {
 				// if the base is a script element, then we want the base of that to be the base of the mmultiscripts
 				let mut base_children = base.children();
 				let script_base = as_element(base.children()[0]);
-				base_children[0] = ChildOfElement::Element(create_empty_element(&base.document()));
+				base_children[0] = ChildOfElement::Element(CanonicalizeContext::create_empty_element(&base.document()));
 				base.replace_children(base_children);
 				add_to_scripts(base, &mut postscripts);
 				base = script_base;
@@ -1770,7 +1778,7 @@ impl CanonicalizeContext {
 				let script = as_element(mrow_children[i_postscript]);
 				if name(&script) == "msub" && i_postscript+1 < mrow_children.len() {
 					let superscript = as_element(mrow_children[i_postscript+1]);
-					if name(&superscript) == "msup" && is_empty_element(as_element(superscript.children()[0])) {
+					if name(&superscript) == "msup" && CanonicalizeContext::is_empty_element(as_element(superscript.children()[0])) {
 						set_mathml_name(script, "msubsup");
 						script.append_child(superscript.children()[1]);
 						i_postscript += 1;
@@ -1813,7 +1821,7 @@ impl CanonicalizeContext {
 		fn add_to_scripts<'a>(el: Element<'a>, scripts: &mut Vec<ChildOfElement<'a>>) -> bool {
 			let script_name = name(&el);
 			if !(script_name == "msub" || script_name == "msup" || script_name == "msubsup") ||
-			   !is_empty_element(as_element(el.children()[0])) {
+			   !CanonicalizeContext::is_empty_element(as_element(el.children()[0])) {
 					return false;
 			}
 			if script_name == "msub" {
@@ -1830,7 +1838,7 @@ impl CanonicalizeContext {
 			let child_of_element = if let Some(subscript) = subscript {subscript} else {superscript.unwrap()};
 			let doc = as_element(child_of_element).document();
 			let subscript = if let Some(subscript)= subscript {
-				if is_empty_element(as_element(subscript)) {
+				if CanonicalizeContext::is_empty_element(as_element(subscript)) {
 					ChildOfElement::Element(create_mathml_element(&doc, "none"))
 				} else {
 					subscript
@@ -1839,7 +1847,7 @@ impl CanonicalizeContext {
 				ChildOfElement::Element(create_mathml_element(&doc, "none"))
 			};
 			let superscript = if let Some(superscript) = superscript {
-				if is_empty_element(as_element(superscript)) {
+				if CanonicalizeContext::is_empty_element(as_element(superscript)) {
 					ChildOfElement::Element(create_mathml_element(&doc, "none"))
 				} else {
 					superscript
@@ -1905,7 +1913,7 @@ impl CanonicalizeContext {
 					child = as_element(child.children()[0]);
 				}
 
-				return is_leaf(child) && !is_empty_element(child);  // a little overly general (but hopefully doesn't matter)
+				return is_leaf(child) && !CanonicalizeContext::is_empty_element(child);  // a little overly general (but hopefully doesn't matter)
 			}
 
 			/// Return the index of the matched open paren/bracket if the last element is a closed paren/bracket
@@ -2804,12 +2812,11 @@ impl CanonicalizeContext {
 	}
 
 	// implied comma when two numbers are adjacent and are in a script position
-	fn is_implied_comma<'a>(&self, prev: &'a Element<'a>, current: &'a Element<'a>) -> bool {
+	fn is_implied_comma<'a>(&self, prev: &'a Element<'a>, current: &'a Element<'a>, mrow: &'a Element<'a>) -> bool {
 		if name(prev) != "mn" || name(current) != "mn" {
 			return false;
 		}
 
-		let mrow = current.parent().unwrap().element().unwrap();
 		assert_eq!(name(&mrow), "mrow");
 		let container = mrow.parent().unwrap().element().unwrap();
 		let name = name(&container);
@@ -3059,7 +3066,6 @@ impl CanonicalizeContext {
 	fn canonicalize_mrows_in_mrow<'a>(&self, mrow: Element<'a>) -> Result<Element<'a>> {
 		let saved_mrow_attrs = mrow.attributes();	
 		assert_eq!(name(&mrow), "mrow");
-		// debug!("canonicalize_mrows_in_mrow: mrow len={}", children.len());	
 	
 		// FIX: don't touch/canonicalize
 		// 1. if intent is given -- anything intent references
@@ -3105,7 +3111,7 @@ impl CanonicalizeContext {
 								OperatorPair{ ch: "\u{2061}", op: &INVISIBLE_FUNCTION_APPLICATION }
 							} else if self.is_mixed_fraction(&previous_child, &children[i_child..])? {
 								OperatorPair{ ch: "\u{2064}", op: &IMPLIED_INVISIBLE_PLUS }
-							} else if self.is_implied_comma(&previous_child, &current_child) {
+							} else if self.is_implied_comma(&previous_child, &current_child, &mrow) {
 								OperatorPair{ch: "\u{2063}", op: &IMPLIED_INVISIBLE_COMMA }				  
 							} else if self.is_implied_chemical_bond(&previous_child, &current_child) {
 								OperatorPair{ch: "\u{2063}", op: &IMPLIED_CHEMICAL_BOND }				  
@@ -4283,6 +4289,20 @@ mod canonicalize_tests {
         assert!(are_strs_canonically_equal(test_str, target_str));
 	}
 
+	#[test]
+    fn empty_content() {
+        let test_str = "<math></math>";
+        let target_str = " <math><mtext data-added='missing-content' data-changed='empty_content'> </mtext></math>";
+        assert!(are_strs_canonically_equal(test_str, target_str));
+	}
+
+	#[test]
+    fn empty_content_after_cleanup() {
+        let test_str = "<math><mrow><mphantom><mn>1</mn></mphantom></mrow></math>";
+        let target_str = " <math><mtext data-added='missing-content'> </mtext></math>";
+        assert!(are_strs_canonically_equal(test_str, target_str));
+	}
+
 
 	#[test]
     fn clean_semantics() {
@@ -4580,6 +4600,32 @@ mod canonicalize_tests {
 				</msup>
 				</mrow>
 			</math>";
+        assert!(are_strs_canonically_equal(test_str, target_str));
+	}
+
+	#[test]
+    fn parent_bug_94() {
+		// Note: this isn't ideal -- it really should merge the leading '0' to get just one mn with content "0.02"
+        let test_str = "	<math>
+		<mrow>
+			<msqrt>
+				<mrow>
+					<mstyle mathvariant='bold' mathsize='normal'><mn>0</mn></mstyle>
+					<mstyle mathvariant='bold' mathsize='normal'><mo>.</mo><mn>0</mn><mn>2</mn></mstyle>
+				</mrow>
+			</msqrt>
+		</mrow>
+	</math>
+	";
+        let target_str = "<math>
+		<msqrt>
+		  <mrow>
+			<mn mathsize='normal' mathvariant='bold'>𝟎</mn>
+			<mo data-changed='added'>&#x2062;</mo>
+			<mn mathsize='normal' mathvariant='bold' data-changed='added'>.02</mn>
+		  </mrow>
+		</msqrt>
+	   </math>";
         assert!(are_strs_canonically_equal(test_str, target_str));
 	}
 
