@@ -30,7 +30,7 @@
           if: "$SpeechOverrides_CapitalLetters = ''"
           then_test:
             if: "$Impairment = 'Blindness'"
-            then: [t: "cap"]
+            then: [t: "iso"]
           else: [x: "$SpeechOverrides_CapitalLetters"] 
     - pitch:
         value: "$CapitalLetters_Pitch"
@@ -91,7 +91,7 @@
  - "<":                                             # 0x3c
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "pienempi"]
+         then: [t: "on"]
      - t: "pienempi kuin"
  - "=":                                           # 0x3d
     - test: 
@@ -102,7 +102,7 @@
  - ">":                                          # 0x3e
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "suurempi"]
+         then: [t: "on"]
      - t: "suurempi kuin"
  - "?": [t: "kysymysmerkki"]                       # 0x3f
  - "@": [t: "ät-merkki"]                             # 0x40
@@ -211,7 +211,7 @@
  - "ο": [t: "omikron"]                                # 0x3bf
  - "π": [t: "pii"]                                    # 0x3c0
  - "ρ": [t: "rhoo"]                                   # 0x3c1
- - "ς": [t: "final sigma"]                            # 0x3c2 # Finnish pronunciation?
+ - "ς": [t: "viimeinen sigma"]                        # 0x3c2 # Finnish pronunciation? eng: "final sigma"
  - "σ": [t: "sigma"]                                  # 0x3c3
  - "υ": [t: "upsilon"]                                # 0x3c5
  - "τ": [t: "tau"]                                    # 0x3c4
@@ -242,10 +242,10 @@
             then: [t: "ja niin edelleen"]
             else: [t: "ja niin edelleen kunnes"]
 
- - "⁡":                                          # 0x2061 # Finnish translation? How does this work?
-    - test:
-        if: "$Verbosity!='Terse' and not(preceding-sibling::*[1][IsInDefinition(., 'GeometryShapes')])" 
-        then: [t: "of"]
+#  - "⁡":                                          # 0x2061 # Finnish translation? How does this work?
+#     - test:
+#         if: "$Verbosity!='Terse' and not(preceding-sibling::*[1][IsInDefinition(., 'GeometryShapes')])" 
+#         then: [t: "of"]
  - "⁢": [t: ""]                                   # 0x2062
  - "⁣": [t: ""]                                   # 0x2063
  - "⁤": [t: "ja"]                                # 0x2064
@@ -296,16 +296,16 @@
  - "∃": [t: "on olemassa"]                        # 0x2203
  - "∄": [t: "ei ole olemassa"]                # 0x2204
  - "∅": [t: "tyhjä joukko"]                           # 0x2205
- - "∆":                                          # 0x2206
-     - test: 
-         if: "$Verbosity!='Terse'"
-         then: [t: "the"] # in Finnish?
-     - t: "laplace" # in Finnish?
- - "∇":                                          # 0x2207
-     - test: 
-         if: "$Verbosity!='Terse'"
-         then: [t: "the"] # in Finnish?
-     - t: "gradientti"
+ - "∆": [t: "laplace"]                                         # 0x2206
+    #  - test: 
+    #      if: "$Verbosity!='Terse'"
+    #      then: [t: "the"] # in Finnish?
+    #  - t: "laplace" # in Finnish?
+ - "∇": [t: "gradientti"]                                         # 0x2207
+    #  - test: 
+    #      if: "$Verbosity!='Terse'"
+    #      then: [t: "the"] # in Finnish?
+    #  - t: "gradientti"
  - "∈":                                          # 0x2208 # different scenarios in Finnish?
      - test:
         if: "$SpeechStyle != 'ClearSpeak'"
@@ -315,69 +315,69 @@
             if: "../../self::m:set or ../../../self::m:set" # inside a set
             then_test:
               - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'In'
-                then: [t: "joukossa"]                           # eng: "in"
+                then: [t: "joukossa"]                               # eng: "in"
               - else_if: $ClearSpeak_SetMemberSymbol = 'Member'
-                then: [t: "member of"]                          # eng: "member of"
+                then: [t: "alkio joukossa"]                         # eng: "member of"
               - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
                 then: [t: "alkio joukossa"]                         # eng: "element of"
-              - else: [t: "kuuluu joukkoon"]                       # eng: "belonging to"            # $ClearSpeak_SetMemberSymbol = 'Belongs'
+              - else: [t: "kuuluu joukkoon"]                        # eng: "belonging to"            # $ClearSpeak_SetMemberSymbol = 'Belongs'
             else_test:
               - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'Member'
-                then: [t: "on alkio joukossa"]                     # eng: "is a member of"
+                then: [t: "on alkio joukossa"]                      # eng: "is a member of"
               - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
-                then: [t: "on alkio joukossa"]                   # eng: "is an element of"
+                then: [t: "on alkio joukossa"]                      # eng: "is an element of"
               - else_if: $ClearSpeak_SetMemberSymbol = 'In'
-                then: [t: "on joukossa"]                        # eng: "is in"
-              - else: [t: "kuuluu joukkoon"]                    # eng: "belongs to"              # $ClearSpeak_SetMemberSymbol = 'Belongs'
+                then: [t: "on joukossa"]                            # eng: "is in"
+              - else: [t: "kuuluu joukkoon"]                        # eng: "belongs to"              # $ClearSpeak_SetMemberSymbol = 'Belongs'
  - "∉":                                          # 0x2209
     # rule is identical to 0x2208
      - test:
         if: "$SpeechStyle != 'ClearSpeak'"
-        then: [t: "is not an element of"]
+        then: [t: "ei ole alkio joukossa"]
         # Several options for speaking elements in ClearSpeak -- they split between being inside a set or not and then the option
         else_test:
             if: "../../self::m:set or ../../../self::m:set" # inside a set
             then_test:
               - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'In'
-                then: [t: "not in"]
+                then: [t: "ei ole joukossa"]
               - else_if: $ClearSpeak_SetMemberSymbol = 'Member'
-                then: [t: "not member of"]
+                then: [t: "ei alkio joukossa"]
               - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
-                then: [t: "not element of"]
-              - else: [t: "not belonging to"]             # $ClearSpeak_SetMemberSymbol = 'Belongs'
+                then: [t: "ei alkio joukossa"]
+              - else: [t: "ei kuulu joukkoon"]             # $ClearSpeak_SetMemberSymbol = 'Belongs'
             else_test:
               - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'Member'
-                then: [t: "is not a member of"]
+                then: [t: "ei ole alkio joukossa"]
               - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
-                then: [t: "is not an element of"]
+                then: [t: "ei ole alkio joukossa"]
               - else_if: $ClearSpeak_SetMemberSymbol = 'In'
-                then: [t: "is not in"]
-              - else: [t: "does not belong to"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
+                then: [t: "ei ole joukossa"]
+              - else: [t: "ei kuulu joukkoon"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
  - "∊":                                          # 0x220a
      - test:
         if: "$SpeechStyle != 'ClearSpeak'"
-        then: [t: "is an element of"]
+        then: [t: "on alkio joukossa"]
         # Several options for speaking elements in ClearSpeak -- they split between being inside a set or not and then the option
         else_test:
             if: "../../self::m:set or ../../../self::m:set" # inside a set
             then_test:
               - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'In'
-                then: [t: "in"]
+                then: [t: "joukossa"]
               - else_if: $ClearSpeak_SetMemberSymbol = 'Member'
-                then: [t: "member of"]
+                then: [t: "alkio joukossa"]
               - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
-                then: [t: "element of"]
-              - else: [t: "belonging to"]             # $ClearSpeak_SetMemberSymbol = 'Belongs'
+                then: [t: "alkio joukossa"]
+              - else: [t: "kuuluu joukkoon"]             # $ClearSpeak_SetMemberSymbol = 'Belongs'
             else_test:
               - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'Member'
-                then: [t: "is a member of"]
+                then: [t: "on alkio joukossa"]
               - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
-                then: [t: "is an element of"]
+                then: [t: "on alkio joukossa"]
               - else_if: $ClearSpeak_SetMemberSymbol = 'In'
-                then: [t: "is in"]
-              - else: [t: "belongs to"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
+                then: [t: "on joukossa"]
+              - else: [t: "kuuluu joukkoon"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
  - "∏": [t: "tulo"]                             # 0x220f
- - "∐": [t: "co-product"]                          # 0x2210
+ - "∐": [t: "kotulo"]                          # 0x2210 # from category theory, correct in Finnish context?
  - "∑": [t: "summa"]                                 # 0x2211
  - "−": [t: "miinus"]                               # 0x2212
  - "∓": [t: "miinus tai plus"]                       # 0x2213
@@ -387,13 +387,13 @@
  - "√":                                          # 0x221a
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "neliöjuuri"]
+         then: [t: "on"]
      - t: "neliöjuuri"
  - "∝":                                          # 0x221d
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "verrannollinen"]
-     - t: "on verrannollinen"
+         then: [t: "on"]
+     - t: "verrannollinen"
  - "∞": [t: "ääretön"]                          # 0x221e
  - "∟": [t: "suorakulma"]                         # 0x221f
  - "∠": [t: "kulma"]                               # 0x2220
@@ -403,13 +403,13 @@
  - "∥":                                           # 0x2225
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "yhdensuuntainen"]
-     - t: "on yhdensuuntainen"
- - "∦":                                           # 0x2226
+         then: [t: "on"]
+     - t: "yhdensuuntainen"
+ - "∦":                                        # 0x2226
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "ei yhdensuuntainen"]
-     - t: "ei ole yhdensuuntainen"
+         then: [t: "ei ole yhdensuuntainen"]
+         else: [t: "ei yhdensuuntainen"]
  - "∧": [t: "ja"]                                 # 0x2227
  - "∨": [t: "tai"]                                  # 0x2228
  - "∩": [t: "leikkaus"]                        # 0x2229
