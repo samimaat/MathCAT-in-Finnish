@@ -376,48 +376,48 @@
               - else_if: $ClearSpeak_SetMemberSymbol = 'In'
                 then: [t: "is in"]
               - else: [t: "belongs to"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
- - "∏": [t: "product"]                             # 0x220f
+ - "∏": [t: "tulo"]                             # 0x220f
  - "∐": [t: "co-product"]                          # 0x2210
- - "∑": [t: "sum"]                                 # 0x2211
- - "−": [t: "minus"]                               # 0x2212
- - "∓": [t: "minus or plus"]                       # 0x2213
- - "∗": [t: "times"]                               # 0x2217
- - "∘": [t: "composed with"]                       # 0x2218
- - "∙": [t: "times"]                               # 0x2219
+ - "∑": [t: "summa"]                                 # 0x2211
+ - "−": [t: "miinus"]                               # 0x2212
+ - "∓": [t: "miinus tai plus"]                       # 0x2213
+ - "∗": [t: "tai"]                               # 0x2217
+ - "∘": [t: "yhdistetty"]                       # 0x2218
+ - "∙": [t: "kertaa"]                               # 0x2219
  - "√":                                          # 0x221a
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "the"]
-     - t: "square root of"
+         then: [t: "neliöjuuri"]
+     - t: "neliöjuuri"
  - "∝":                                          # 0x221d
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: "proportional to"
- - "∞": [t: "infinity"]                          # 0x221e
- - "∟": [t: "right angle"]                         # 0x221f
- - "∠": [t: "angle"]                               # 0x2220
- - "∡": [t: "measured angle"]                      # 0x2221
- - "∣": [t: "divides"]                              # 0x2223
- - "∤": [t: "does not divide"]                      # 0x2224
+         then: [t: "verrannollinen"]
+     - t: "on verrannollinen"
+ - "∞": [t: "ääretön"]                          # 0x221e
+ - "∟": [t: "suorakulma"]                         # 0x221f
+ - "∠": [t: "kulma"]                               # 0x2220
+ - "∡": [t: "mitattu kulma"]                      # 0x2221
+ - "∣": [t: "jakaa"]                              # 0x2223
+ - "∤": [t: "ei jaa"]                      # 0x2224
  - "∥":                                           # 0x2225
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: "parallel to"
+         then: [t: "yhdensuuntainen"]
+     - t: "on yhdensuuntainen"
  - "∦":                                           # 0x2226
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: "not parallel to"
- - "∧": [t: "and"]                                 # 0x2227
- - "∨": [t: "or"]                                  # 0x2228
- - "∩": [t: "intersection"]                        # 0x2229
- - "∪": [t: "union"]                               # 0x222a
- - "∫": [t: "integral"]                            # 0x222b
- - "∬": [t: "double integral"]                     # 0x222c
- - "∭": [t: "triple integral"]                     # 0x222d
- - "∮": [t: "contour integral"]                    # 0x222e
+         then: [t: "ei yhdensuuntainen"]
+     - t: "ei ole yhdensuuntainen"
+ - "∧": [t: "ja"]                                 # 0x2227
+ - "∨": [t: "tai"]                                  # 0x2228
+ - "∩": [t: "leikkaus"]                        # 0x2229
+ - "∪": [t: "unioni"]                               # 0x222a
+ - "∫": [t: "integraali"]                            # 0x222b
+ - "∬": [t: "kaksoisintegraali"]                     # 0x222c
+ - "∭": [t: "kolmoisintegraali"]                     # 0x222d
+ - "∮": [t: "contour integral"]                    # 0x222e # in Finnish?
  - "∶":                                          # 0x2236
      - test: 
          if: "$Verbosity!='Terse'"
@@ -425,7 +425,7 @@
      - t: "to"
  - "∷": [t: "as"]                                  # 0x2237
  - "∼": [t: "varies with"]                         # 0x223c
- - "∽": [t: "reversed tilde"]                      # 0x223d
+ - "∽": [t: "käännetty tilde"]                      # 0x223d
  - "∾":                                          # 0x223e
      - test: 
          if: "$Verbosity!='Terse'"
