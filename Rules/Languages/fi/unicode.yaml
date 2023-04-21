@@ -418,11 +418,11 @@
  - "∬": [t: "kaksoisintegraali"]                     # 0x222c
  - "∭": [t: "kolmoisintegraali"]                     # 0x222d
  - "∮": [t: "polkuintegraali"]                    # 0x222e # "contour integral", should it be "kompleksinen polkuintegraali"?
- - "∶":                                          # 0x2236 # context?
-     - test: 
-         if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: "to"
+ - "∶":  [t: "siten että"]                        # 0x2236 # context?
+    #  - test: 
+    #      if: "$Verbosity!='Terse'"
+    #      then: [t: "is"]
+    #  - t: "to"
  - "∷": [t: "as"]                                  # 0x2237 # in Finnish texts?
  - "∼": [t: "varies with"]                         # 0x223c
  - "∽": [t: "käännetty tilde"]                      # 0x223d
@@ -454,8 +454,8 @@
      - t: "suurempi tai yhtä suuri kuin"
  - "≦": [t: "pienempi tai yhtä suuri kuin"]      # 0x2266
  - "≧": [t: "suurempi tai yhtä suuri kuin"]      # 0x2267
- - "≺": [t: "precedes"]                          # 0x227a
- - "≻": [t: "succeeds"]                          # 0x227b
+ - "≺": [t: "precedes"]                          # 0x227a # Finnish?
+ - "≻": [t: "succeeds"]                          # 0x227b # Finnish?
  - "⊂":                                          # 0x2282
      - test: 
          if: "$Verbosity!='Terse'"
@@ -465,7 +465,7 @@
      - test: 
          if: "$Verbosity!='Terse'"
          then: [t: "on"]
-     - t: "superset of"
+     - t: "ylijoukko joukolle"
  - "⊄": [ei ole aito osajoukko joukolle]         # 0x2284
     #  - test: 
     #      if: "$Verbosity!='Terse'"
