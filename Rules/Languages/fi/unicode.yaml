@@ -194,62 +194,62 @@
         # note: processing of ranges converts '.' into the character, so it needs to be in quotes below
         replace: [spell: "translate('.', 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡ΢ΣΤΥΦΧΨΩ', 'αβγδεζηθικλμνξοπρςστυφχψω')"]
 
- - "α": [t: "alfa"]                               # 0x3b1
- - "β": [t: "beeta"]                                # 0x3b2
- - "γ": [t: "gamma"]                               # 0x3b3
- - "δ": [t: "delta"]                               # 0x3b4
- - "ε": [t: "epsilon"]                             # 0x3b5
- - "ζ": [t: "zeeta"]                                # 0x3b6
- - "η": [t: "eeta"]                                 # 0x3b7
- - "θ": [t: "theeta"]                               # 0x3b8
- - "ι": [t: "ioota"]                                # 0x3b9
- - "κ": [t: "kappa"]                               # 0x3ba
- - "λ": [t: "lambda"]                               # 0x3bb
- - "μ": [t: "muu"]                                  # 0x3bc
- - "ν": [t: "nuu"]                                  # 0x3bd
- - "ξ": [t: "ksii"]                                 # 0x3be
- - "ο": [t: "omikron"]                             # 0x3bf
- - "π": [t: "pii"]                                  # 0x3c0
- - "ρ": [t: "rhoo"]                                 # 0x3c1
- - "ς": [t: "final sigma"]                         # 0x3c2 # Finnish pronunciation?
- - "σ": [t: "sigma"]                               # 0x3c3
- - "τ": [t: "tau"]                                 # 0x3c4
- - "υ": [t: "upsilon"]                             # 0x3c5
- - "φ": [t: "phii"]                                 # 0x3c6
- - "χ": [t: "khii"]                                 # 0x3c7
- - "ψ": [t: "psii"]                                 # 0x3c8
- - "ω": [t: "oomega"]                               # 0x3c9
- - "ϕ": [t: "phii"]                                 # 0x3d5
- - "ϖ": [t: "pii"]                                  # 0x3d6
- - "ϵ": [t: "epsilon"]                             # 0x3f5
- - "϶": [t: "käännetty epsilon"]                    # 0x3f6
+ - "α": [t: "alfa"]                                   # 0x3b1
+ - "β": [t: "beeta"]                                  # 0x3b2
+ - "γ": [t: "gamma"]                                  # 0x3b3
+ - "δ": [t: "delta"]                                  # 0x3b4
+ - "ε": [t: "epsilon"]                                # 0x3b5
+ - "ζ": [t: "zeeta"]                                  # 0x3b6
+ - "η": [t: "eeta"]                                   # 0x3b7
+ - "θ": [t: "theeta"]                                 # 0x3b8
+ - "ι": [t: "ioota"]                                  # 0x3b9
+ - "κ": [t: "kappa"]                                  # 0x3ba
+ - "λ": [t: "lambda"]                                 # 0x3bb
+ - "μ": [t: "muu"]                                    # 0x3bc
+ - "ν": [t: "nuu"]                                    # 0x3bd
+ - "ξ": [t: "ksii"]                                   # 0x3be
+ - "ο": [t: "omikron"]                                # 0x3bf
+ - "π": [t: "pii"]                                    # 0x3c0
+ - "ρ": [t: "rhoo"]                                   # 0x3c1
+ - "ς": [t: "final sigma"]                            # 0x3c2 # Finnish pronunciation?
+ - "σ": [t: "sigma"]                                  # 0x3c3
+ - "υ": [t: "upsilon"]                                # 0x3c5
+ - "τ": [t: "tau"]                                    # 0x3c4
+ - "φ": [t: "phii"]                                   # 0x3c6
+ - "χ": [t: "khii"]                                   # 0x3c7
+ - "ψ": [t: "psii"]                                   # 0x3c8
+ - "ω": [t: "oomega"]                                 # 0x3c9
+ - "ϕ": [t: "phii"]                                   # 0x3d5
+ - "ϖ": [t: "pii"]                                    # 0x3d6
+ - "ϵ": [t: "epsilon"]                                # 0x3f5
+ - "϶": [t: "käännetty epsilon"]                      # 0x3f6
 
- - "–": [t: "en dash"]                             # 0x2013
- - "—": [t: "em dash"]                             # 0x2014
- - "―": [t: "horizontal bar"]                      # 0x2015
- - "‖": [t: "double vertical line"]                # 0x2016
- - "•": [t: "bullet"]                              # 0x2022
- - "…":                                          # 0x2026
+ - "–": [t: "väliviiva"]                              # 0x2013 # context for the dashes?
+ - "—": [t: "ajatusviiva"]                            # 0x2014
+ - "―": [t: "vaakaviiva"]                             # 0x2015
+ - "‖": [t: "tuplavaakaviiva"]                        # 0x2016
+ - "•": [t: "pallo"]                                  # 0x2022
+ - "…":                                               # 0x2026
     test:
         if:
             - "$SpeechStyle != 'ClearSpeak' or $ClearSpeak_Ellipses = 'Auto' or"
                # must be ClearSpeak and $ClearSpeak_Ellipses = 'AndSoOn'
                # speak '…' as 'and so on...' unless expr starts with '…'
             - "../*[1][text()='…']"
-        then: [t: "dot dot dot"]
+        then: [t: "piste piste piste"]
         else_test:  # must have $ClearSpeak_Ellipses = 'AndSoOn'
             if: "count(following-sibling::*) = 0"
-            then: [t: "and so on"]
-            else: [t: "and so on up to"]
+            then: [t: "ja niin edelleen"]
+            else: [t: "ja niin edelleen kunnes"]
 
- - "⁡":                                          # 0x2061
+ - "⁡":                                          # 0x2061 # Finnish translation? How does this work?
     - test:
         if: "$Verbosity!='Terse' and not(preceding-sibling::*[1][IsInDefinition(., 'GeometryShapes')])" 
         then: [t: "of"]
  - "⁢": [t: ""]                                   # 0x2062
  - "⁣": [t: ""]                                   # 0x2063
- - "⁤": [t: "and"]                                # 0x2064
- - "′": [t: "prime"]                               # 0x2032
+ - "⁤": [t: "ja"]                                # 0x2064
+ - "′": [t: "prime"]                               # 0x2032 # What are these?
  - "″": [t: "double prime"]                        # 0x2033
  - "‴": [t: "triple prime"]                        # 0x2034
  - "‵": [t: "reversed prime"]                      # 0x2035
@@ -260,75 +260,75 @@
     - t: "double-struck"
     - spell: "translate('.', 'ℂℕℚℝℤ', 'CNQRZ')"
 
- - "℃": [t: "degrees celsius"]                     # 0x2103
- - "℉": [t: "degrees fahrenheit"]                  # 0x2109
- - "ℋℛℓ":                                          # 0x210b
+ - "℃": [t: "celsiusaste"]                     # 0x2103 # plural?
+ - "℉": [t: "faahrenheitaste"]                  # 0x2109 # plural?
+ - "ℋℛℓ":                                          # 0x210b # what is this?
     - t: "script"
     - spell: "translate('.', 'ℋℛℓ', 'HRl')"
- - "ℎ": [t: "planck constant"]                     # 0x210e
- - "ℜ":                                          # 0x211c
+ - "ℎ": [t: "planckin vakio"]                     # 0x210e
+ - "ℜ":                                          # 0x211c # what is this?
     - t: "fraktur"
     - spell: "'R'"
 
- - "Ω": [t: "ohms"]                                # 0x2126
+ - "Ω": [t: "ohmi"]                                # 0x2126 # plural?
  - "K": [t: "kelvin"]                              # 0x212a
  - "Å": [t: "angstroms"]                           # 0x212b
- - "ⅆⅇⅈⅉ":                                          # 0x2146-9
+ - "ⅆⅇⅈⅉ":                                          # 0x2146-9 # what is this?
     - t: "double-struck italic"
     - spell: "translate('.', 'ⅆⅇⅈⅉ', 'deij')"
 
- - "←": [t: "leftwards arrow"]                     # 0x2190
- - "↑": [t: "upwards arrow"]                       # 0x2191
+ - "←": [t: "nuoli vasemmalle"]                     # 0x2190
+ - "↑": [t: "nuoli ylös"]                       # 0x2191
  - "→":                                          # 0x2192
      - test:
         if: "ancestor::*[2][self::m:limit]"
-        then: [t: "approaches"]
-        else: [t: "right arrow"]
+        then: [t: "lähestyy"]
+        else: [t: "nuoli oikealle"]
 
- - "↓": [t: "downwards arrow"]                     # 0x2193
- - "⇒": [t: "rightwards double arrow"]             # 0x21d2
- - "∀": [t: "for all"]                             # 0x2200
+ - "↓": [t: "nuoli alas"]                     # 0x2193
+ - "⇒": [t: "tuplanuoli oikealle"]             # 0x21d2
+ - "∀": [t: "kaikilla"]                             # 0x2200
  - "∂":                                          # 0x2202
      - test: 
          if: "$Verbosity='Terse'"
-         then: [t: "partial"]
-         else: [t: "partial derivative"]
- - "∃": [t: "there exists"]                        # 0x2203
- - "∄": [t: "there does not exist"]                # 0x2204
- - "∅": [t: "empty set"]                           # 0x2205
+         then: [t: "osittainen"]
+         else: [t: "osittaisderivaatta"]
+ - "∃": [t: "on olemassa"]                        # 0x2203
+ - "∄": [t: "ei ole olemassa"]                # 0x2204
+ - "∅": [t: "tyhjä joukko"]                           # 0x2205
  - "∆":                                          # 0x2206
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "the"]
-     - t: "laplacian of"
+         then: [t: "the"] # in Finnish?
+     - t: "laplace" # in Finnish?
  - "∇":                                          # 0x2207
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "the"]
-     - t: "gradient of"
- - "∈":                                          # 0x2208
+         then: [t: "the"] # in Finnish?
+     - t: "gradientti"
+ - "∈":                                          # 0x2208 # different scenarios in Finnish?
      - test:
         if: "$SpeechStyle != 'ClearSpeak'"
-        then: [t: "an element of"]
+        then: [t: "on alkio joukossa"]            # eng: on alkio joukossa
         # Several options for speaking elements in ClearSpeak -- they split between being inside a set or not and then the option
         else_test:
             if: "../../self::m:set or ../../../self::m:set" # inside a set
             then_test:
               - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'In'
-                then: [t: "in"]
+                then: [t: "joukossa"]                           # eng: "in"
               - else_if: $ClearSpeak_SetMemberSymbol = 'Member'
-                then: [t: "member of"]
+                then: [t: "member of"]                          # eng: "member of"
               - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
-                then: [t: "element of"]
-              - else: [t: "belonging to"]             # $ClearSpeak_SetMemberSymbol = 'Belongs'
+                then: [t: "alkio joukossa"]                         # eng: "element of"
+              - else: [t: "kuuluu joukkoon"]                       # eng: "belonging to"            # $ClearSpeak_SetMemberSymbol = 'Belongs'
             else_test:
               - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'Member'
-                then: [t: "is a member of"]
+                then: [t: "on alkio joukossa"]                     # eng: "is a member of"
               - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
-                then: [t: "is an element of"]
+                then: [t: "on alkio joukossa"]                   # eng: "is an element of"
               - else_if: $ClearSpeak_SetMemberSymbol = 'In'
-                then: [t: "is in"]
-              - else: [t: "belongs to"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
+                then: [t: "on joukossa"]                        # eng: "is in"
+              - else: [t: "kuuluu joukkoon"]                    # eng: "belongs to"              # $ClearSpeak_SetMemberSymbol = 'Belongs'
  - "∉":                                          # 0x2209
     # rule is identical to 0x2208
      - test:
