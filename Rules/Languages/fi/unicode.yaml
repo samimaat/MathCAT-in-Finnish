@@ -1,0 +1,488 @@
+---
+ # Note to translators:
+ #   most languages don't have two ways to pronounce 'a' -- if not need, remove the rules and change "B-Z" to "A-Z"
+ #   some languages say the word for "uppercase" after the letter. Make sure to change that where appropriate by moving some code around
+
+ # Finnish translator note:
+ #  changed to "a-z"
+ - "a-z": 
+    - test: 
+        if: "$TTS='none'"
+        then: [t: "."]                          
+        else: [spell: "'.'"]                       
+
+ # Capital letters are a little tricky: users can pick their favorite word (something that was requested) and 
+ # screen readers have options to use pitch changes or beeps instead of or in addition to say "cap"
+ # Also, if a user can see the screen, they probably don't need to hear "cap", but if they specified an override, they must want to hear the override.
+
+# Finnish translator note:
+#  changed to "A-Z"
+ - "A-Z":
+    - test: 
+        if: "$CapitalLetters_Beep"
+        then:
+        - audio:
+            value: "beep.mp4"
+            replace: []
+    - test: 
+        if: "$CapitalLetters_UseWord"
+        then_test:
+          if: "$SpeechOverrides_CapitalLetters = ''"
+          then_test:
+            if: "$Impairment = 'Blindness'"
+            then: [t: "cap"]
+          else: [x: "$SpeechOverrides_CapitalLetters"] 
+    - pitch:
+        value: "$CapitalLetters_Pitch"
+        # note: processing of ranges converts '.' into the character, so it needs to be in quotes below
+        replace: [spell: "translate('.', 'BCDEFGHIJKLMNOPQRSTUVWXYZ', 'bcdefghijklmnopqrstuvwxyz')"]
+
+ - "0-9": [t: "."]
+
+ - "!": [t: "kertoma"]                           # 0x21
+ - "\"": [t: "lainausmerkki"]                    # 0x22
+ - "#": [t: "number"]                            # 0x23
+ - "$": [t: "dollari"]                           # 0x24
+ - "%": [t: "prosentti"]                         # 0x25
+ - "&": [t: "et"]                                # 0x26
+ - "'": [t: "heittomerkki"]                      # 0x27
+ - "(":                                          # 0x28
+    - test:
+        if: $SpeechStyle = 'ClearSpeak' or $SpeechStyle = 'SimpleSpeak'
+        then_test:
+            if: "$Verbosity='Terse'"
+            then: [t: "auki"]
+            else: [t: "sulku auki"]
+        else: [t: "vasen sulku"]                            
+ - ")":                                          # 0x29
+    - test:
+        if: $SpeechStyle = 'ClearSpeak' or $SpeechStyle = 'SimpleSpeak'
+        then_test:
+            if: "$Verbosity='Terse'"
+            then: [t: "kiinni"]
+            else: [t: "sulku kiinni"]
+        else: [t: "oikea sulku"]                            
+
+ - "*": [t: "kertaa"]                               # 0x2a
+ - "+": [t: "plus"]                                # 0x2b
+ - ",":                                          # 0x2c
+    # the following deals with the interaction of "," with "…" which sometimes wants the ',' to be silent
+    # that this test is here and not with "…" is not ideal, but seems simplest
+     test:
+        if:
+            - "$SpeechStyle != 'ClearSpeak' or $ClearSpeak_Ellipses = 'Auto' or "
+               # must be ClearSpeak and $ClearSpeak_Ellipses = 'AndSoOn'
+               # speak "comma" when not adjacent to '…'
+            - "( following-sibling::*[1][text()!= '…'] and preceding-sibling::*[1][text()!='…']  ) or "
+               # except if expression starts with '…'
+            - " ../*[1][text()='…'] "
+        then: [t: "pilkku"]
+        # else silent
+
+ - "-": [t: "miinus"]                               # 0x2d
+ - ".":                                             # 0x2e
+    - test:
+        if: "parent::*[1][self::m:mn]"
+        # then: [t: "point"]                        # probably no use case
+        else: [t: "piste"]
+ - "/": [t: "jaettuna"]                             # 0x2f # should this be "jaettu"? different use cases should be considered
+ - ":": [t: "kaksoispiste"]                         # 0x3a
+ - ";": [t: "kaksoispilkku"]                        # 0x3b
+ - "<":                                             # 0x3c
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "pienempi"]
+     - t: "pienempi kuin"
+ - "=":                                           # 0x3d
+    - test: 
+        if: "$Verbosity!='Terse'"
+        then: [t: "on yhtä suuri kuin"]
+        else: [t: "on"]
+
+ - ">":                                          # 0x3e
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "suurempi"]
+     - t: "suurempi kuin"
+ - "?": [t: "kysymysmerkki"]                       # 0x3f
+ - "@": [t: "ät-merkki"]                             # 0x40
+ - "[":                                          # 0x5b
+    - test:
+        if: $SpeechStyle = 'ClearSpeak' or $SpeechStyle = 'SimpleSpeak'
+        then: [t: "haka auki"]
+        else: [t: "vasen hakasulku"]                            
+ - "\\": [t: "kenoviiva"]                         # 0x5c
+ - "]":                                          # 0x5d
+    - test:
+        if: $SpeechStyle = 'ClearSpeak' or $SpeechStyle = 'SimpleSpeak'
+        then: [t: "haka kiinni"]
+        else: [t: "oikea hakasulku"]
+ - "^": [t: "hattu"]                             # 0x5e
+ - "_": [t: "alaviiva"]                          # 0x5f
+ - "`": [t: "gravis"]                            # 0x60 # should check usage in Finnish texts
+ - "{":                                          # 0x7b
+    - test:
+        if: $SpeechStyle = 'ClearSpeak' or $SpeechStyle = 'SimpleSpeak'
+        then: [t: "kaari auki"]
+        else: [t: "vasen kaarisulku"]                            
+ - "|":                                          # 0x7c
+    # note: for ClearSpeak and SimpleSpeak, "|" inside of sets is handled at the mrow level, same for 'sets'
+     - test:
+        - if: $SpeechStyle != 'ClearSpeak'
+          then: [t: "pystyviiva"]
+        - else_if: "$ClearSpeak_VerticalLine = 'SuchThat'"
+          then: [t: "niin että"]
+        - else_if: "$ClearSpeak_VerticalLine = 'Given'"  
+          then: [t: "niin että"]                 # "given (that)" in Finnish
+        - else: [t: "jakaa"]                   
+
+ - "}":                                          # 0x7d
+    - test:
+        if: $SpeechStyle = 'ClearSpeak' or $SpeechStyle = 'SimpleSpeak'
+        then: [t: "kaari kiinni"]
+        else: [t: "oikea kaarisulku"]                            
+
+ - "~": [t: "tilde"]                                # 0x7e
+ - " ": [t: ""]                                     # 0xa0
+ - "¢": [t: "sentti"]                               # 0xa2 # plural needed
+ - "£": [t: "punta"]                                # 0xa3  # plural needed
+ - "¬": [t: "ei"]                                   # 0xac
+ - "°": [t: "aste"]                                 # 0xb0 # plural needed
+ - "±": [t: "plus tai miinus"]                      # 0xb1
+ - "´": [t: "akuutti"]                              # 0xb4 # check usage in Finnish texts
+ - "·":                                             # 0xB7
+    - test:
+        if: "$SpeechStyle != 'ClearSpeak' or $ClearSpeak_MultSymbolDot = 'Auto'"
+        then: [t: "kertaa"]
+        else: [t: "piste"]
+ - "×":                                          # 0xd7
+    - test:
+        if: "$SpeechStyle != 'ClearSpeak' or $ClearSpeak_MultSymbolX = 'Auto'"
+        then: [t: "kertaa"]
+        else_test:
+            if: $ClearSpeak_MultSymbolX = 'By'
+            then: [t: "kertaa"]
+            else: [t: "risti"]
+ - "÷": [t: "jaettuna"]                          # 0xf7
+ - "̀": [t: "grave accent embellishment"]          # 0x300 # meaning of embellishments?
+ - "́": [t: "acute accent embellishment"]          # 0x301
+ - "̂": [t: "circumflex accent embellishment"]     # 0x302
+ - "̃": [t: "tilde embellishment"]                 # 0x303
+ - "̄": [t: "macron embellishment"]                # 0x304
+ - "̅": [t: "overbar embellishment"]               # 0x305
+ - "̆": [t: "breve"]                               # 0x306
+ - "̇": [t: "dot above embellishment"]             # 0x307
+
+   # Note: ClearSpeak has pref TriangleSymbol for "Δ", but that is wrong
+ - "Α-Ω": 
+    - test: 
+        if: "$CapitalLetters_Beep"
+        then:
+        - audio:
+            value: "beep.mp4"
+            replace: []
+    - test: 
+        if: "$CapitalLetters_UseWord"
+        then_test:
+          if: "$SpeechOverrides_CapitalLetters = ''"
+          then_test:
+            if: "$Impairment = 'Blindness'"
+            then: [t: "iso"]
+          else: [x: "$SpeechOverrides_CapitalLetters"] 
+    - pitch:
+        value: "$CapitalLetters_Pitch"
+        # note: processing of ranges converts '.' into the character, so it needs to be in quotes below
+        replace: [spell: "translate('.', 'ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡ΢ΣΤΥΦΧΨΩ', 'αβγδεζηθικλμνξοπρςστυφχψω')"]
+
+ - "α": [t: "alfa"]                               # 0x3b1
+ - "β": [t: "beeta"]                                # 0x3b2
+ - "γ": [t: "gamma"]                               # 0x3b3
+ - "δ": [t: "delta"]                               # 0x3b4
+ - "ε": [t: "epsilon"]                             # 0x3b5
+ - "ζ": [t: "zeeta"]                                # 0x3b6
+ - "η": [t: "eeta"]                                 # 0x3b7
+ - "θ": [t: "theeta"]                               # 0x3b8
+ - "ι": [t: "ioota"]                                # 0x3b9
+ - "κ": [t: "kappa"]                               # 0x3ba
+ - "λ": [t: "lambda"]                               # 0x3bb
+ - "μ": [t: "muu"]                                  # 0x3bc
+ - "ν": [t: "nuu"]                                  # 0x3bd
+ - "ξ": [t: "ksii"]                                 # 0x3be
+ - "ο": [t: "omikron"]                             # 0x3bf
+ - "π": [t: "pii"]                                  # 0x3c0
+ - "ρ": [t: "rhoo"]                                 # 0x3c1
+ - "ς": [t: "final sigma"]                         # 0x3c2 # Finnish pronunciation?
+ - "σ": [t: "sigma"]                               # 0x3c3
+ - "τ": [t: "tau"]                                 # 0x3c4
+ - "υ": [t: "upsilon"]                             # 0x3c5
+ - "φ": [t: "phii"]                                 # 0x3c6
+ - "χ": [t: "khii"]                                 # 0x3c7
+ - "ψ": [t: "psii"]                                 # 0x3c8
+ - "ω": [t: "oomega"]                               # 0x3c9
+ - "ϕ": [t: "phii"]                                 # 0x3d5
+ - "ϖ": [t: "pii"]                                  # 0x3d6
+ - "ϵ": [t: "epsilon"]                             # 0x3f5
+ - "϶": [t: "käännetty epsilon"]                    # 0x3f6
+
+ - "–": [t: "en dash"]                             # 0x2013
+ - "—": [t: "em dash"]                             # 0x2014
+ - "―": [t: "horizontal bar"]                      # 0x2015
+ - "‖": [t: "double vertical line"]                # 0x2016
+ - "•": [t: "bullet"]                              # 0x2022
+ - "…":                                          # 0x2026
+    test:
+        if:
+            - "$SpeechStyle != 'ClearSpeak' or $ClearSpeak_Ellipses = 'Auto' or"
+               # must be ClearSpeak and $ClearSpeak_Ellipses = 'AndSoOn'
+               # speak '…' as 'and so on...' unless expr starts with '…'
+            - "../*[1][text()='…']"
+        then: [t: "dot dot dot"]
+        else_test:  # must have $ClearSpeak_Ellipses = 'AndSoOn'
+            if: "count(following-sibling::*) = 0"
+            then: [t: "and so on"]
+            else: [t: "and so on up to"]
+
+ - "⁡":                                          # 0x2061
+    - test:
+        if: "$Verbosity!='Terse' and not(preceding-sibling::*[1][IsInDefinition(., 'GeometryShapes')])" 
+        then: [t: "of"]
+ - "⁢": [t: ""]                                   # 0x2062
+ - "⁣": [t: ""]                                   # 0x2063
+ - "⁤": [t: "and"]                                # 0x2064
+ - "′": [t: "prime"]                               # 0x2032
+ - "″": [t: "double prime"]                        # 0x2033
+ - "‴": [t: "triple prime"]                        # 0x2034
+ - "‵": [t: "reversed prime"]                      # 0x2035
+ - "‶": [t: "reversed double prime"]               # 0x2036
+ - "‷": [t: "reversed triple prime"]               # 0x2037
+
+ - "ℂℕℚℝℤ":     # here we rely on this running through the table again to speak "cap xxx"
+    - t: "double-struck"
+    - spell: "translate('.', 'ℂℕℚℝℤ', 'CNQRZ')"
+
+ - "℃": [t: "degrees celsius"]                     # 0x2103
+ - "℉": [t: "degrees fahrenheit"]                  # 0x2109
+ - "ℋℛℓ":                                          # 0x210b
+    - t: "script"
+    - spell: "translate('.', 'ℋℛℓ', 'HRl')"
+ - "ℎ": [t: "planck constant"]                     # 0x210e
+ - "ℜ":                                          # 0x211c
+    - t: "fraktur"
+    - spell: "'R'"
+
+ - "Ω": [t: "ohms"]                                # 0x2126
+ - "K": [t: "kelvin"]                              # 0x212a
+ - "Å": [t: "angstroms"]                           # 0x212b
+ - "ⅆⅇⅈⅉ":                                          # 0x2146-9
+    - t: "double-struck italic"
+    - spell: "translate('.', 'ⅆⅇⅈⅉ', 'deij')"
+
+ - "←": [t: "leftwards arrow"]                     # 0x2190
+ - "↑": [t: "upwards arrow"]                       # 0x2191
+ - "→":                                          # 0x2192
+     - test:
+        if: "ancestor::*[2][self::m:limit]"
+        then: [t: "approaches"]
+        else: [t: "right arrow"]
+
+ - "↓": [t: "downwards arrow"]                     # 0x2193
+ - "⇒": [t: "rightwards double arrow"]             # 0x21d2
+ - "∀": [t: "for all"]                             # 0x2200
+ - "∂":                                          # 0x2202
+     - test: 
+         if: "$Verbosity='Terse'"
+         then: [t: "partial"]
+         else: [t: "partial derivative"]
+ - "∃": [t: "there exists"]                        # 0x2203
+ - "∄": [t: "there does not exist"]                # 0x2204
+ - "∅": [t: "empty set"]                           # 0x2205
+ - "∆":                                          # 0x2206
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "the"]
+     - t: "laplacian of"
+ - "∇":                                          # 0x2207
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "the"]
+     - t: "gradient of"
+ - "∈":                                          # 0x2208
+     - test:
+        if: "$SpeechStyle != 'ClearSpeak'"
+        then: [t: "an element of"]
+        # Several options for speaking elements in ClearSpeak -- they split between being inside a set or not and then the option
+        else_test:
+            if: "../../self::m:set or ../../../self::m:set" # inside a set
+            then_test:
+              - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'In'
+                then: [t: "in"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Member'
+                then: [t: "member of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
+                then: [t: "element of"]
+              - else: [t: "belonging to"]             # $ClearSpeak_SetMemberSymbol = 'Belongs'
+            else_test:
+              - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'Member'
+                then: [t: "is a member of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
+                then: [t: "is an element of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'In'
+                then: [t: "is in"]
+              - else: [t: "belongs to"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
+ - "∉":                                          # 0x2209
+    # rule is identical to 0x2208
+     - test:
+        if: "$SpeechStyle != 'ClearSpeak'"
+        then: [t: "is not an element of"]
+        # Several options for speaking elements in ClearSpeak -- they split between being inside a set or not and then the option
+        else_test:
+            if: "../../self::m:set or ../../../self::m:set" # inside a set
+            then_test:
+              - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'In'
+                then: [t: "not in"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Member'
+                then: [t: "not member of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
+                then: [t: "not element of"]
+              - else: [t: "not belonging to"]             # $ClearSpeak_SetMemberSymbol = 'Belongs'
+            else_test:
+              - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'Member'
+                then: [t: "is not a member of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
+                then: [t: "is not an element of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'In'
+                then: [t: "is not in"]
+              - else: [t: "does not belong to"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
+ - "∊":                                          # 0x220a
+     - test:
+        if: "$SpeechStyle != 'ClearSpeak'"
+        then: [t: "is an element of"]
+        # Several options for speaking elements in ClearSpeak -- they split between being inside a set or not and then the option
+        else_test:
+            if: "../../self::m:set or ../../../self::m:set" # inside a set
+            then_test:
+              - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'In'
+                then: [t: "in"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Member'
+                then: [t: "member of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
+                then: [t: "element of"]
+              - else: [t: "belonging to"]             # $ClearSpeak_SetMemberSymbol = 'Belongs'
+            else_test:
+              - if: $ClearSpeak_SetMemberSymbol = 'Auto' or $ClearSpeak_SetMemberSymbol = 'Member'
+                then: [t: "is a member of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'Element'
+                then: [t: "is an element of"]
+              - else_if: $ClearSpeak_SetMemberSymbol = 'In'
+                then: [t: "is in"]
+              - else: [t: "belongs to"]              # $ClearSpeak_SetMemberSymbol = 'Belongs'
+ - "∏": [t: "product"]                             # 0x220f
+ - "∐": [t: "co-product"]                          # 0x2210
+ - "∑": [t: "sum"]                                 # 0x2211
+ - "−": [t: "minus"]                               # 0x2212
+ - "∓": [t: "minus or plus"]                       # 0x2213
+ - "∗": [t: "times"]                               # 0x2217
+ - "∘": [t: "composed with"]                       # 0x2218
+ - "∙": [t: "times"]                               # 0x2219
+ - "√":                                          # 0x221a
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "the"]
+     - t: "square root of"
+ - "∝":                                          # 0x221d
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "proportional to"
+ - "∞": [t: "infinity"]                          # 0x221e
+ - "∟": [t: "right angle"]                         # 0x221f
+ - "∠": [t: "angle"]                               # 0x2220
+ - "∡": [t: "measured angle"]                      # 0x2221
+ - "∣": [t: "divides"]                              # 0x2223
+ - "∤": [t: "does not divide"]                      # 0x2224
+ - "∥":                                           # 0x2225
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "parallel to"
+ - "∦":                                           # 0x2226
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "not parallel to"
+ - "∧": [t: "and"]                                 # 0x2227
+ - "∨": [t: "or"]                                  # 0x2228
+ - "∩": [t: "intersection"]                        # 0x2229
+ - "∪": [t: "union"]                               # 0x222a
+ - "∫": [t: "integral"]                            # 0x222b
+ - "∬": [t: "double integral"]                     # 0x222c
+ - "∭": [t: "triple integral"]                     # 0x222d
+ - "∮": [t: "contour integral"]                    # 0x222e
+ - "∶":                                          # 0x2236
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "to"
+ - "∷": [t: "as"]                                  # 0x2237
+ - "∼": [t: "varies with"]                         # 0x223c
+ - "∽": [t: "reversed tilde"]                      # 0x223d
+ - "∾":                                          # 0x223e
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "most positive"
+ - "∿": [t: "sine wave"]                           # 0x223f
+ - "≠":                                          # 0x2260
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "not equal to"
+ - "≡":                                          # 0x2261
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: " identical to"
+ - "≤":                                          # 0x2264
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t:  "less than or equal to"
+ - "≥":                                          # 0x2265
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "greater than or equal to"
+ - "≦": [t: "less than over equal to"]             # 0x2266
+ - "≧": [t: "greater than over equal to"]          # 0x2267
+ - "≺": [t: "precedes"]                            # 0x227a
+ - "≻": [t: "succeeds"]                            # 0x227b
+ - "⊂":                                          # 0x2282
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is a"]
+     - t: "subset of"
+ - "⊃":                                          # 0x2283
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is a"]
+     - t: "superset of"
+ - "⊄":                                          # 0x2284
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "not a subset of"
+ - "⊅":                                          # 0x2285
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is"]
+     - t: "not a superset of"
+ - "⊆":                                          # 0x2286
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is a"]
+     - t: "subset of or equal to"
+ - "⊇":                                          # 0x2287
+     - test: 
+         if: "$Verbosity!='Terse'"
+         then: [t: "is a"]
+     - t: "superset of or equal to"
