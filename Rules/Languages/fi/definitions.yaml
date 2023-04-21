@@ -25,9 +25,9 @@
 
 # For English, a regular pattern starts at twenty
     NumbersOnes: [
-        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-        "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-        "seventeen", "eighteen", "nineteen"
+        "nolla", "yksi", "kaksi", "kolme", "neljä", "viisi", "kuusi", "seitsemän", "kahdeksan", "yhdeksän",
+        "kymmenen", "yksitoista", "kaksitoista", "kolmetoista", "neljätoista", "viisitosita", "kuusitoista",
+        "seitsemäntoista", "kahdeksantoista", "yhdeksäntoista"
     ],
 
     NumbersOrdinalOnes: [
