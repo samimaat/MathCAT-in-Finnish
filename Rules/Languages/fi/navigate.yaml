@@ -42,8 +42,8 @@
   - x: "$Move2D"
   - test:
       if: "count($Child2D/preceding-sibling::*)=0"
-      then: [{t: "numerator"}]
-      else: [{t: "denominator"}]
+      then: [{t: "osoittaja"}]
+      else: [{t: "nimittäjä"}]
   - pause: "medium"
 
 - name: into-or-out-of
@@ -51,7 +51,7 @@
   match: "$Move2D != ''"
   replace:
   - x: "$Move2D"
-  - t: "square root"
+  - t: "neliöjuuri"
   - pause: "medium"
 
 - name: into-or-out-of
