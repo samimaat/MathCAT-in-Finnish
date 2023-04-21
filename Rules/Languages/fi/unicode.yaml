@@ -417,72 +417,72 @@
  - "∫": [t: "integraali"]                            # 0x222b
  - "∬": [t: "kaksoisintegraali"]                     # 0x222c
  - "∭": [t: "kolmoisintegraali"]                     # 0x222d
- - "∮": [t: "contour integral"]                    # 0x222e # in Finnish?
- - "∶":                                          # 0x2236
+ - "∮": [t: "polkuintegraali"]                    # 0x222e # "contour integral", should it be "kompleksinen polkuintegraali"?
+ - "∶":                                          # 0x2236 # context?
      - test: 
          if: "$Verbosity!='Terse'"
          then: [t: "is"]
      - t: "to"
- - "∷": [t: "as"]                                  # 0x2237
+ - "∷": [t: "as"]                                  # 0x2237 # in Finnish texts?
  - "∼": [t: "varies with"]                         # 0x223c
  - "∽": [t: "käännetty tilde"]                      # 0x223d
- - "∾":                                          # 0x223e
+ - "∾":                                          # 0x223e # in Finnish texts?
      - test: 
          if: "$Verbosity!='Terse'"
          then: [t: "is"]
      - t: "most positive"
- - "∿": [t: "sine wave"]                           # 0x223f
+ - "∿": [t: "siniaalto"]                           # 0x223f
  - "≠":                                          # 0x2260
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: "not equal to"
+         then: [t: "on"]
+     - t: "eri suuri kuin"
  - "≡":                                          # 0x2261
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: " identical to"
+         then: [t: "on"]
+     - t: "identtinen"
  - "≤":                                          # 0x2264
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t:  "less than or equal to"
+         then: [t: "on"]
+     - t:  "pienempi tai yhtä suuri kuin"
  - "≥":                                          # 0x2265
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: "greater than or equal to"
- - "≦": [t: "less than over equal to"]             # 0x2266
- - "≧": [t: "greater than over equal to"]          # 0x2267
- - "≺": [t: "precedes"]                            # 0x227a
- - "≻": [t: "succeeds"]                            # 0x227b
+         then: [t: "on"]
+     - t: "suurempi tai yhtä suuri kuin"
+ - "≦": [t: "pienempi tai yhtä suuri kuin"]      # 0x2266
+ - "≧": [t: "suurempi tai yhtä suuri kuin"]      # 0x2267
+ - "≺": [t: "precedes"]                          # 0x227a
+ - "≻": [t: "succeeds"]                          # 0x227b
  - "⊂":                                          # 0x2282
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is a"]
-     - t: "subset of"
+         then: [t: "on"]
+     - t: "aito osajoukko joukolle"
  - "⊃":                                          # 0x2283
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is a"]
+         then: [t: "on"]
      - t: "superset of"
- - "⊄":                                          # 0x2284
-     - test: 
-         if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: "not a subset of"
- - "⊅":                                          # 0x2285
-     - test: 
-         if: "$Verbosity!='Terse'"
-         then: [t: "is"]
-     - t: "not a superset of"
+ - "⊄": [ei ole aito osajoukko joukolle]         # 0x2284
+    #  - test: 
+    #      if: "$Verbosity!='Terse'"
+    #      then: [t: ""]
+    #  - t: "not a subset of"
+ - "⊅": [ei ole aito ylijoukko joukolle]         # 0x2285
+    #  - test: 
+    #      if: "$Verbosity!='Terse'"
+    #      then: [t: "is"]
+    #  - t: "not a superset of"
  - "⊆":                                          # 0x2286
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is a"]
-     - t: "subset of or equal to"
+         then: [t: "on"]
+     - t: "osajoukko joukolle"
  - "⊇":                                          # 0x2287
      - test: 
          if: "$Verbosity!='Terse'"
-         then: [t: "is a"]
-     - t: "superset of or equal to"
+         then: [t: "on"]
+     - t: "ylijoukko joukolle"
