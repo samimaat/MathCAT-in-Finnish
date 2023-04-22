@@ -735,10 +735,10 @@
           then:
           - test:
               if: "$Verbosity='Verbose'"
-              then: [{t: "superscript"}]
+              then: [{t: "yläindeksi"}]
               else_test:
                 if: "$Verbosity='Medium'"
-                then: [{t: "super"}]
+                then: [{t: "ylä"}]
           - x: "$Prescripts[2]"
           - pause: "short"
       - test:
@@ -746,10 +746,10 @@
           then:
           - test:
               if: "$Verbosity='Verbose'"
-              then: [{t: "subscript"}]
+              then: [{t: "alaindeksi"}]
               else_test:
                 if: "$Verbosity='Medium'"
-                then: [{t: "sub"}]
+                then: [{t: "ala"}]
           - x: "$Prescripts[1]"
           - pause: "short"
       - test:
@@ -760,10 +760,10 @@
               then:
               - test:
                   if: "$Verbosity='Verbose'"
-                  then: [{t: "superscript"}]
+                  then: [{t: "yläindeksi"}]
                   else_test:
                     if: "$Verbosity='Medium'"
-                    then: [{t: "super"}]
+                    then: [{t: "ylä"}]
               - x: "$Prescripts[4]"
               - pause: "short"
           - test:
@@ -771,10 +771,10 @@
               then:
               - test:
                   if: "$Verbosity='Verbose'"
-                  then: [{t: "subscript"}]
+                  then: [{t: "alaindeksi"}]
                   else_test:
                     if: "$Verbosity='Medium'"
-                    then: [{t: "sub"}]
+                    then: [{t: "ala"}]
               - x: "$Prescripts[3]"
               - pause: "short"
   - x: "*[1]" # base
@@ -786,10 +786,10 @@
           then:
           - test:
               if: "$Verbosity='Verbose'"
-              then: [{t: "subscript"}]
+              then: [{t: "alaindeksi"}]
               else_test:
                 if: "$Verbosity='Medium'"
-                then: [{t: "sub"}]
+                then: [{t: "ala"}]
           - x: "$Postscripts[1]"
           - pause: "short"
       - test:
@@ -797,10 +797,10 @@
           then:
           - test:
               if: "$Verbosity='Verbose'"
-              then: [{t: "superscript"}]
+              then: [{t: "yläindeksi"}]
               else_test:
                 if: "$Verbosity='Medium'"
-                then: [{t: "super"}]
+                then: [{t: "ylä"}]
           - x: "$Postscripts[2]"
           - pause: "short"
       - test:
@@ -811,10 +811,10 @@
               then:
               - test:
                   if: "$Verbosity='Verbose'"
-                  then: [{t: "subscript"}]
+                  then: [{t: "alaindeksi"}]
                   else_test:
                     if: "$Verbosity='Medium'"
-                    then: [{t: "sub"}]
+                    then: [{t: "ala"}]
               - x: "$Postscripts[3]"
               - pause: "short"
           - test:
@@ -822,10 +822,10 @@
               then:
               - test:
                   if: "$Verbosity='Verbose'"
-                  then: [{t: "superscript"}]
+                  then: [{t: "yläindeksi"}]
                   else_test:
                     if: "$Verbosity='Medium'"
-                    then: [{t: "super"}]
+                    then: [{t: "ylä"}]
               - x: "$Postscripts[4]"
               - pause: "short"
           - test:
@@ -836,10 +836,10 @@
                   then:
                   - test:
                       if: "$Verbosity='Verbose'"
-                      then: [{t: "subscript"}]
+                      then: [{t: "alaindeksi"}]
                       else_test:
                         if: "$Verbosity='Medium'"
-                        then: [{t: "sub"}]
+                        then: [{t: "ala"}]
                   - x: "$Postscripts[5]"
                   - pause: "short"
               - test:
@@ -847,10 +847,10 @@
                   then:
                   - test:
                       if: "$Verbosity='Verbose'"
-                      then: [{t: "superscript"}]
+                      then: [{t: "yläindeksi"}]
                       else_test:
                         if: "$Verbosity='Medium'"
-                        then: [{t: "super"}]
+                        then: [{t: "ylä"}]
                   - x: "$Postscripts[6]"
                   - pause: "short"
               - test:
@@ -861,10 +861,10 @@
                       then:
                       - test:
                           if: "$Verbosity='Verbose'"
-                          then: [{t: "subscript"}]
+                          then: [{t: "alaindeksi"}]
                           else_test:
                             if: "$Verbosity='Medium'"
-                            then: [{t: "sub"}]
+                            then: [{t: "ala"}]
                       - x: "$Postscripts[7]"
                       - pause: "short"
                   - test:
@@ -872,10 +872,10 @@
                       then:
                       - test:
                           if: "$Verbosity='Verbose'"
-                          then: [{t: "superscript"}]
+                          then: [{t: "yläindeksi"}]
                           else_test:
                             if: "$Verbosity='Medium'"
-                            then: [{t: "super"}]
+                            then: [{t: "ylä"}]
                       - x: "$Postscripts[8]"
                       - pause: "short"
       - test:
