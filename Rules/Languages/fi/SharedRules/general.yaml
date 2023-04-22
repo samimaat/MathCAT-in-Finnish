@@ -89,7 +89,7 @@
   replace:
   - x: "*[1]"
   - pause: auto
-  - t: evaluated at
+  - t: arvolla
   - pause: auto
   - x: "*[2]"
 
@@ -99,10 +99,10 @@
   replace:
   - x: "*[1]"
   - pause: auto
-  - t: evaluated at
+  - t: arvolla
   - pause: auto
   - x: "*[3]"
-  - t: "minus the same expression evaluated at"
+  - t: "vähennettynä arvolla"
   - x: "*[2]"
 
 - name: binomial
@@ -110,7 +110,7 @@
   match: "not(@data-intent-hint)"
   replace:
   - x: "*[1]"
-  - t: choose
+  - t: yli
   - x: "*[2]"
 
 - name: permutation
@@ -118,17 +118,17 @@
   match: "not(@data-intent-hint)"
   replace:
   - x: "*[2]"
-  - t: permutations of
+  - t: permutaatio
   - x: "*[1]"
 
 - name: intervals
   tag: [open-interval, open-closed-interval, closed-interval, closed-open-interval]
   match: "not(@data-intent-hint)"
   replace:
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "the"
+  # - test:
+  #     if: "$Verbosity!='Terse'"
+  #     then:
+  #     - t: "the"
   - x: "translate(name(.),'-', ' ')"
   - test:
       if: "$Verbosity!='Terse'"
@@ -139,7 +139,7 @@
       - x: "*[2]"
       else:
       - x: "*[1]"
-      - t: "comma"
+      - t: "pilkku"
       - x: "*[2]"
 
 - name: default-point
