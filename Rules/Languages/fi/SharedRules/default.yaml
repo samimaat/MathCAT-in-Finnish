@@ -441,7 +441,7 @@
   tag: "intent-literal"
   match: "starts-with(text(), '-')"
   replace:
-  - t: "minus"
+  - t: "miinus"
   - x: "translate(text(), '-_.', ' ')"   # more accurate to translate "-" to nothing, but turning it into a space should be ok
 
 - name: intent-literal
@@ -496,11 +496,11 @@
   match: count(*)>0
   replace:
   - x: "translate(name(.), '-_', '  ')"
-  - t: "of"
+  - t: "arvolla" # this might be correct translation, otherwise delete
   - pause: short
   - insert:
       nodes: "*"
-      replace: [{t: "comma"}, {pause: auto}]
+      replace: [{t: "pilkku"}, {pause: auto}]
 
 - name: default-text
   # unknown leaf -- just speak the text -- could be a literal intent
