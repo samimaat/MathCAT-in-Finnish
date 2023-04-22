@@ -84,9 +84,11 @@
       
 
     # At this point, hopefully the language is regular. If not, code needs to be written
+
+    # In Finnish, the long scale is used. Should it be skipped or added as "thousand billions"?
     NumbersLarge: [
-        "", "thousand", "million", "billion", "trillion", "quadrillion",
-        "quintillion", "sextillion", "septillion", "octillion", "nonillion",
+        "", "tuhat", "miljoona", "miljardi", "biljoona", "tuhat biljoonaa",
+        "triljoona", "tuhat triljoonaa", "kvadriljoona", "tuhat kvadriljoonaa", "kvintiljoona",
     ],
       
     NumbersOrdinalLarge: [
