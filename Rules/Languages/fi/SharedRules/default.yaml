@@ -313,49 +313,49 @@
   replace:
   - test:
       if: ".[contains(concat(' ', normalize-space(@notation), ' '), ' box ')]"
-      then: [{t: box}, {pause: short}]
+      then: [{t: laatikko}, {pause: short}]
   - test:
       if: ".[contains(@notation,'roundedbox')]"
-      then: [{t: round box}, {pause: short}]
+      then: [{t: pyöreä laatikko}, {pause: short}]
   - test:
       if: ".[contains(@notation,'circle')]"
-      then: [{t: circle}, {pause: short}]
+      then: [{t: ympyrä}, {pause: short}]
   - test:
       if: ".[ contains(concat(' ', normalize-space(@notation), ' '), ' left ') or contains(concat(' ', normalize-space(@notation), ' '), ' right ') or contains(@notation,'top') or contains(@notation,'bottom') ]"
       then:
-      - t: line on
+      - t: viiva
       - test:
           if: ".[contains(concat(' ', normalize-space(@notation), ' '), ' left ')]"
-          then: [{t: left}, {pause: short}]
+          then: [{t: vasemmalla}, {pause: short}]
       - test:
           if: ".[contains(concat(' ', normalize-space(@notation), ' '), ' right ')]"
-          then: [{t: right}, {pause: short}]
+          then: [{t: oikealla}, {pause: short}]
       - test:
           if: ".[contains(@notation,'top')]"
-          then: [{t: top}, {pause: short}]
+          then: [{t: päällä}, {pause: short}]
       - test:
           if: ".[contains(@notation,'bottom')]"
-          then: [{t: bottom}, {pause: short}]
+          then: [{t: alla}, {pause: short}]
   - test:
       if: ".[ contains(@notation,'updiagonalstrike') or contains(@notation,'downdiagonalstrike') or contains(@notation,'verticalstrike') or contains(@notation,'horizontalstrike') ]"
       then:
+      - t: yliviivattu
       - test:
           if: ".[contains(@notation,'updiagonalstrike') and contains(@notation,'downdiagonalstrike')]"
           then: [{spell: "'x'"}, {pause: short}] # seems better to say 'x cross out' than 'up diagonal, down diagonal cross out'
           else:
           - test:
               if: ".[contains(@notation,'updiagonalstrike')]"
-              then: [{t: up diagonal}, {pause: short}]
+              then: [{t: ylös viistoon}, {pause: short}]
           - test:
               if: ".[contains(@notation,'downdiagonalstrike')]"
-              then: [{t: down diagonal}, {pause: short}]
+              then: [{t: alas viistoon}, {pause: short}]
       - test:
           if: ".[contains(@notation,'verticalstrike')]"
-          then: [{t: vertical}, {pause: short}]
+          then: [{t: pystyyn}, {pause: short}]
       - test:
           if: ".[contains(@notation,'horizontalstrike')]"
-          then: [{t: horizontal}, {pause: short}]
-      - t: cross out
+          then: [{t: vaakaan}, {pause: short}]
       - pause: short
   - test:
       if: ".[contains(@notation,'uparrow')]"
