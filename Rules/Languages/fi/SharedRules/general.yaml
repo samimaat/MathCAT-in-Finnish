@@ -527,13 +527,13 @@
   variables: [{IsColumnSilent: true()}]
   match: "count(*)=1 and *[self::m:mtr][count(*) = 1]"
   replace:
-  - ot: the
-  - t: 1 by 1
+  # - ot: the
+  - t: 1 kertaa 1
   - test:
       if: "self::m:determinant" # just need to check the first bracket since we know it must be (, [, or |
-      then: {t: determinant}
-      else: {t: matrix}
-  - t: with entry
+      then: {t: determinantti}
+      else: {t: matriisi}
+  - t: arvoilla # eng. "with entry", better translation needed?
   - x: "*[1]/*"
 
 # simpler reading methods for smaller matrices if the entries are simple
