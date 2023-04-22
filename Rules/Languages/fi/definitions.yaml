@@ -60,8 +60,9 @@
         "", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
     ],
 
+# Test if these should written separately in Finnish for pronunciation.
     NumbersOrdinalTens: [
-        "", "tenth", "twentieth", "thirtieth", "fortieth", "fiftieth", "sixtieth", "seventieth", "eightieth", "ninetieth"
+        "", "kymmenes", "kahdeskymmenes", "kolmaskymmenes", "neljäskymmenes", "viideskymmenes", "kuudeskymmenes", "seitsemäskymmenes", "kahdeksaskymmenes", "yhdeksäskymmenes"
     ],
 
     NumbersOrdinalPluralTens: [
