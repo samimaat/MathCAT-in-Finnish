@@ -193,7 +193,7 @@
   - t: "ala"
   - x: "*[2]"
 
-- name: bigop-both
+- name: bigop-both # Context?
   tag: large-op
   match: "count(*) = 3"
   replace:
@@ -209,7 +209,7 @@
       if: "following-sibling::*"
       then: [{t: of}]
 
-- name: bigop-under
+- name: bigop-under  # Context?
   tag: large-op
   match: "not(@data-intent-hint)"
   replace:
@@ -223,7 +223,7 @@
       if: "following-sibling::*"
       then: [{t: of}]
 
-- name: largeop
+- name: largeop  # Context?
   tag: mrow
   match: "count(*)=2 and IsLargeOp(*[1])"
   replace:
@@ -240,8 +240,8 @@
   replace:
   - test:
       if: "$Verbosity!='Terse'"
-      then: [{t: the limit as}]
-      else: [{t: "limit as"}]
+      then: [{t: raja-arvo arvolla}]
+      else: [{t: "raja-arvo"}]
   - x: "*[2]"
   - pause: short
 
@@ -249,7 +249,7 @@
   tag: modified-variable
   match: "*[2][text()='→']"
   replace:
-  - t: "vector"
+  - t: "vektori"
   - x: "*[1]"
 
 - name: default
@@ -271,8 +271,8 @@
       if: "name(.)='say-super'"
       then_test:
         if: "$Verbosity='Terse'"
-        then: {t: super}
-        else: {t: superscript}
+        then: {t: ylä}
+        else: {t: yläindeksi}
   - x: "*[2]"
   - pause: short
 
@@ -284,16 +284,16 @@
   - x: "*[1]"
   - test:
       if: "$Verbosity='Verbose'"
-      then: {t: "subscript"}
-      else: {t: "sub"}
+      then: {t: "alaindeksi"}
+      else: {t: "ala"}
   - x: "*[2]"
   - test:
       if: "not(IsNode(*[2],'leaf'))"
       then:
       - test:
           if: "$Verbosity='Verbose'"
-          then: {t: "end subscript"}
-          else: {t: "end sub"}
+          then: {t: "alaindeksi loppu"}
+          else: {t: "ala loppu"}
       - pause: short
       else_test:
           if: "*[2][self::m:mi]"   # need a pause in "x sub k prime" so the prime is not associated with the 'k'
@@ -302,8 +302,8 @@
       if: "name(.)='say-super'"
       then_test:
         if: "$Verbosity='Verbose'"
-        then: {t: "superscript"}
-        else: {t: "super"}
+        then: {t: "yläindeksi"}
+        else: {t: "ylä"}
   - x: "*[3]"
   - pause: short
 
@@ -312,7 +312,7 @@
   match: "text()='sin'"
   replace:
   - bookmark: "@id"
-  - t: "sine"
+  - t: "sini"
 - name: cos
   tag: mi
   match: "text()='cos'"
@@ -321,7 +321,7 @@
   - test:
       if: "$Verbosity='Terse'"
       then: {t: cos}
-      else: {t: cosine}
+      else: {t: kosini}
 - name: tan
   tag: mi
   match: "text()='tan' or text()='tg'"
@@ -330,7 +330,7 @@
   - test:
       if: "$Verbosity='Terse'"
       then: {t: tan}
-      else: {t: tangent}
+      else: {t: tangentti}
 - name: sec
   tag: mi
   match: "text()='sec'"
