@@ -921,13 +921,13 @@
   - bookmark: "@id"
   - test:
     - if: "text()='-' or text() = ':'"
-      then: [{t: "single bond"}]
+      then: [{t: "yksinkertainen sidos"}]
     - else_if: "text()='=' or text() = '::'"
-      then: [{t: "double bond"}]
+      then: [{t: "kaksinkertainen sidos"}]
     - else_if: "text()='≡'"
-      then: [{t: "triple bond"}]
+      then: [{t: "kolminkertainen sidos"}]
     - else_if: "text()='≣'"
-      then: [{t: "quadruple bond"}]
+      then: [{t: "nelinkertainen sidos"}]
       else: [{x: text()}]
 
 - name: chemical-equation-operator
