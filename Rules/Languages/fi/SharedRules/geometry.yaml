@@ -5,14 +5,14 @@
   match: "."
   replace:
   - test:
-      if: "$Verbosity='Verbose'"
+      if: "$Verbosity='Verbose'" # check if "pisteestä" (eng. point) is proper for this, it might not always be a point 
       then:
-      - t: "the line segment from"
+      - t: "jana pisteestä"
       - x: "*[1]"
-      - t: "to"
+      - t: "pisteeseen"
       - x: "*[2]"
       else:
-      - t: "line segment"
+      - t: "jana"
       - x: "*[1]"
       - x: "*[2]"
 
@@ -21,14 +21,14 @@
   match: "."
   replace:
   - test:
-      if: "$Verbosity='Verbose'"
+      if: "$Verbosity='Verbose'" # check if "pisteestä" (eng. point) is proper for this, it might not always be a point 
       then:
-      - t: "the ray from"
+      - t: "puolisuora pisteestä"
       - x: "*[1]"
-      - t: "to"
+      - t: "pisteeseen"
       - x: "*[2]"
       else:
-      - t: "ray"
+      - t: "puolisuora"
       - x: "*[1]"
       - x: "*[2]"
 
@@ -37,22 +37,22 @@
   match: "."
   replace:
   - test:
-      if: "$Verbosity='Verbose'"
-      then: [{t: "the"}]
-  - t: "arc"
-  - x: "*[1]"
-  - x: "*[2]"
+      if: "$Verbosity='Verbose'" # check if "pisteestä" (eng. point) is proper for this, it might not always be a point 
+      then:
+      - t: "kaari pisteestä"
+      - x: "*[1]"
+      - t: "pisteeseen"
+      - x: "*[2]"
+      else:
+      - t: "kaari"
+      - x: "*[1]"
+      - x: "*[2]"
 
 - name: measure-of-angle
   tag: measure-of-angle
   match: "."
   replace:
-  - test:
-      if: "$Verbosity='Verbose'"
-      then:
-      - t: "the measure of the angle"
-      else:
-      - t: "measure of angle"
+  - t: "kulma"
   - x: "*[1]"
   - x: "*[2]"
   - x: "*[3]"
