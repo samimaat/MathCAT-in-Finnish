@@ -43,7 +43,7 @@
   tag: ms
   match: "."
   replace:
-  - t: "the string"
+  - t: "the string" # context?
   - pause: short
   - x: "text()"
 
@@ -60,7 +60,7 @@
   - x: "*[1]"
   - test:
       if: "$Verbosity!='Terse' or not(*[2][self::m:mn])" # just say "x 1" for terse vs "x sub 1"
-      then: [{t: "sub"}]
+      then: [{t: "ala"}]
   - x: "*[2]"
 
 - name: default
@@ -68,9 +68,9 @@
   match: "."
   replace:
   - x: "*[1]"
-  - t: "sub"
+  - t: "ala"
   - x: "*[2]"
-  - t: "end sub"
+  - t: "ala loppu"
   - pause: short
 
 - name: default
@@ -78,11 +78,11 @@
   match: "."
   replace:
   - x: "*[1]"
-  - t: sub
+  - t: ala
   - x: "*[2]"
-  - t: "raised to the"
+  - t: "potenssiin"
   - x: "*[3]"
-  - t: power
+  # - t: power
 - name: default
   tag: munder
   match: "."
@@ -91,9 +91,8 @@
       if: "not(IsNode(*[1], 'leaf'))"
       then: [{t: "modified"}]
   - x: "*[1]"
-  - t: "with"
+  - t: "alla"
   - x: "*[2]"
-  - t: below
 
 - name: default
   tag: mover
@@ -103,9 +102,8 @@
       if: "not(IsNode(*[1], 'leaf'))"
       then: [{t: "modified"}]
   - x: "*[1]"
-  - t: "with"
+  - t: "yllä"
   - x: "*[2]"
-  - t: "above"
 
 - name: default
   tag: munderover
