@@ -431,18 +431,18 @@
         then: [{t: log}]
       - else_if: "$Verbosity='Terse'"
         then: [{spell: "'ln'"}]
-        else: [{t: natural log}]
+        else: [{t: luonnollinen logaritmi}]
       else:
-      - test:
-          if: "$Verbosity!='Terse' and not(log_is_simple)"
-          then: {t: the}
+      # - test:
+      #     if: "$Verbosity!='Terse' and not(log_is_simple)"
+      #     then: {t: the}
       - test:
         - if: "*[1][text()='log']"
           then: [{t: log}]
         - else_if: "$Verbosity='Terse'"
           then: [{spell: "'ln'"}]
-          else: [{t: natural log}]
-      - t: of
+          else: [{t: luonnollinen logaritmi}]
+      # - t: of
       - pause: short
   - x: "*[3]"
 
@@ -451,10 +451,10 @@
   match: "not(@data-intent-hint)"
   replace:
   - bookmark: "@id"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then: {t: the}
-  - t: log base
+  # - test:
+  #     if: "$Verbosity!='Terse'"
+  #     then: {t: the}
+  - t: log kanta
   - x: "*[1]"
 
 - name: multi-line
