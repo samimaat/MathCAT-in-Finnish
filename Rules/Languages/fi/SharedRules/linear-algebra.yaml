@@ -4,46 +4,22 @@
   tag: determinant
   match: "not(*[1][self::m:mtr])"
   replace:
-  - test:
-      if: "$Verbosity='Verbose'"
-      then:
-      - t: "the"
-  - t: "determinant"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "of"
+  - t: "determinantti"
   - x: "*[1]"
 
 - name: norm
   tag: norm
   match: "not(@data-intent-hint)"
   replace:
-  - test:
-      if: "$Verbosity='Verbose'"
-      then:
-      - t: "the"
-  - t: "norm"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "of"
+  - t: "normi"
   - x: "*[1]"
 
 - name: subscripted-norm
   tag: subscripted-norm
   match: "not(@data-intent-hint)"
   replace:
-  - test:
-      if: "$Verbosity='Verbose'"
-      then:
-      - t: "the"
   - x: "*[2]"
-  - t: "norm"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "of"
+  - t: "normi"
   - x: "*[1]"
 
 - name: transpose
@@ -51,64 +27,33 @@
   match: "not(@data-intent-hint)"
   replace:
   - x: "*[1]"
-  - t: "transpose"
+  - t: "transpoosi"
+
 - name: trace
   tag: trace
   match: "not(@data-intent-hint)"
   replace:
-  - test:
-      if: "$Verbosity='Verbose'"
-      then:
-      - t: "the"
-  - t: "trace"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "of"
+  - t: "jälki"
   - x: "*[1]"
 
 - name: dimension
   tag: dimension
   match: "not(@data-intent-hint)"
   replace:
-  - test:
-      if: "$Verbosity='Verbose'"
-      then:
-      - t: "the"
-  - t: "dimension"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "of"
+  - t: "dimensio"
   - x: "*[1]"
 
 - name: homomorphism
   tag: homomorphism
   match: "not(@data-intent-hint)"
   replace:
-  - test:
-      if: "$Verbosity='Verbose'"
-      then:
-      - t: "the"
-  - t: "homomorphism"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "of"
+  - t: "homomorfismi"
   - x: "*[1]"
 
 - name: kernel
   tag: kernel
   match: "not(@data-intent-hint)"
   replace:
-  - test:
-      if: "$Verbosity='Verbose'"
-      then:
-      - t: "the"
   - t: "kernel"
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "of"
   - x: "*[1]"
 
