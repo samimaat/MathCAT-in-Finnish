@@ -272,18 +272,18 @@
   variables: [{IsColumnSilent: false()}]
   match: "."
   replace:
-  - t: "table with"
+  - t: "taulukko jossa"
   - x: count(*)
   - test:
       if: count(*)=1
-      then: {t: "row"}
-      else: {t: "rows"}
-  - t: and
+      then: {t: "rivi"}
+      else: {t: "riviä"}
+  - t: ja
   - x: "count(*[1]/*)"
   - test:
       if: "count(*[1]/*)=1"
-      then: {t: "column"}
-      else: {t: "columns"}
+      then: {t: "sarake"}
+      else: {t: "saraketta"}
   - pause: long
   - x: "*"
 
@@ -299,7 +299,7 @@
   tag: mtd
   match: "."
   replace:
-  - t: "column"
+  - t: "sarake"
   - x: "count(preceding-sibling::*)+1"
   - pause: medium
   - x: "*" # speak the entry
