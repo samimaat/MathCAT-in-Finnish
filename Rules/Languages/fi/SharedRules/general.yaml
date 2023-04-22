@@ -338,8 +338,8 @@
   - bookmark: "@id"
   - test:
       if: "$Verbosity='Terse'"
-      then: {t: seek}
-      else: {t: secant}
+      then: {t: sek}
+      else: {t: sekantti}
 - name: csc
   tag: mi
   match: "text()='csc'"
@@ -347,8 +347,8 @@
   - bookmark: "@id"
   - test:
       if: "$Verbosity='Terse'"
-      then: {t: co-seek}
-      else: {t: co-secant}
+      then: {t: cosek}
+      else: {t: ko-sekantti}
 - name: cot
   tag: mi
   match: "text()='cot'"
@@ -356,8 +356,8 @@
   - bookmark: "@id"
   - test:
       if: "$Verbosity='Terse'"
-      then: {t: co-tan}
-      else: {t: co-tangent}
+      then: {t: cotan}
+      else: {t: kotangentti}
 
 - name: sinh
   tag: mi
