@@ -598,22 +598,23 @@
     - if: $ClearSpeak_MultiLineOverview = 'Auto'
       then:
       - test:
-        - if: "($ClearSpeak_MultiLineLabel = 'Auto' and self::m:piecewise) or $ClearSpeak_MultiLineLabel = 'Case'"
+        - if: "($ClearSpeak_MultiLineLabel = 'Auto' and self::m:piecewise) or $ClearSpeak_MultiLineLabel = 'Case'" # finnish: return here
           then: [{t: "case"}]
         - else_if: "$ClearSpeak_MultiLineLabel = 'Auto' or $ClearSpeak_MultiLineLabel = 'Line'" # already dealt with Auto/Case
-          then: [{t: "line"}]
-        - else_if: "$ClearSpeak_MultiLineLabel = 'Constraint'"
+          then: [{t: "viiva"}]
+        - else_if: "$ClearSpeak_MultiLineLabel = 'Constraint'" # finnish: return here
           then: [{t: "constraint"}]
         - else_if: "$ClearSpeak_MultiLineLabel = 'Equation'"
-          then: [{t: "equation"}]
+          then: [{t: "yhtälö"}]
         - else_if: "$ClearSpeak_MultiLineLabel = 'Row'"
-          then: [{t: "row"}]
+          then: [{t: "rivi"}]
         - else_if: "$ClearSpeak_MultiLineLabel = 'Step'"
-          then: [{t: "step"}]
+          then: [{t: "porras"}]
           # else 'None -- don't say anything'
       - test:
-        - if: "count(*) > 1 and $ClearSpeak_MultiLineLabel != 'None'"
+        - if: "count(*) > 1 and $ClearSpeak_MultiLineLabel != 'None'" # Finnish: add cases for plurals
           then: [{ct: "s"}] # plural
+
       - pause: short
   - x: "*"
 
@@ -625,15 +626,15 @@
     - if: "($ClearSpeak_MultiLineLabel = 'Auto' and parent::m:piecewise) or $ClearSpeak_MultiLineLabel = 'Case'"
       then: [{t: "case"}]
     - else_if: "$ClearSpeak_MultiLineLabel = 'Auto' or $ClearSpeak_MultiLineLabel = 'Line'" # already dealt with Auto/Case
-      then: [{t: "line"}]
+      then: [{t: "viiva"}]
     - else_if: "$ClearSpeak_MultiLineLabel = 'Constraint'"
       then: [{t: "constraint"}]
     - else_if: "$ClearSpeak_MultiLineLabel = 'Equation'"
-      then: [{t: "equation"}]
+      then: [{t: "yhtälö"}]
     - else_if: "$ClearSpeak_MultiLineLabel = 'Row'"
-      then: [{t: "row"}]
+      then: [{t: "rivi"}]
     - else_if: "$ClearSpeak_MultiLineLabel = 'Step'"
-      then: [{t: "step"}]
+      then: [{t: "porras"}]
       # else 'None -- don't say anything'
   - test:
       if: "$ClearSpeak_MultiLineLabel != 'None'"
