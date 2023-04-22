@@ -146,13 +146,13 @@
   tag: point
   match: "not(@data-intent-hint)"
   replace:
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "the"
-  - t: "point"
+  # - test:
+  #     if: "$Verbosity!='Terse'"
+  #     then:
+  #     - t: "the"
+  - t: "piste"
   - x: "*[1]"
-  - t: "comma"
+  - t: "pilkku"
   - x: "*[2]"
 
 - name: absolute-value
@@ -161,20 +161,20 @@
   replace:
   - test:
       if: "$Verbosity='Terse'"
-      then: [{t: "absolute value"}]
-      else: [{t: "the absolute value of"}]
+      then: [{t: "itseisarvo"}]
+      else: [{t: "itseisarvo"}]
   - x: "*[1]"
   - test:
       if: "IsNode(*[1], 'leaf') or $Impairment != 'Blindness'"
       then: [{pause: short}]
-      else: [{pause: short}, {t: end absolute value}, {pause: short}]
+      else: [{pause: short}, {t: itseisarvo loppu}, {pause: short}]
 
 - name: negative
   tag: negative
   match: "not(@data-intent-hint)"
   replace:
   - bookmark: "./@id"
-  - t: "negative"
+  - t: "negatiivinen"
   - x: "*[1]"
 
 - name: positive
@@ -182,7 +182,7 @@
   match: "not(@data-intent-hint)"
   replace:
   - bookmark: "./@id"
-  - t: "positive"
+  - t: "positiivinen"
   - x: "*[1]"
 
 - name: subscript
@@ -190,16 +190,16 @@
   match: "not(@data-intent-hint)"
   replace:
   - x: "*[1]"
-  - t: "sub"
+  - t: "ala"
   - x: "*[2]"
 
 - name: bigop-both
   tag: large-op
   match: "count(*) = 3"
   replace:
-  - test:
-      if: "$Verbosity!='Terse'"
-      then: [{t: the}]
+  # - test:
+  #     if: "$Verbosity!='Terse'"
+  #     then: [{t: the}]
   - x: "*[1]"
   - t: from
   - x: "*[2]"
