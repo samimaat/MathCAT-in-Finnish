@@ -37,6 +37,7 @@
         "seitsemästoista", "kahdeksestoista", "yhdeksästoista"
     ],
 
+# In Finnish the only use case would be for fractions?
     NumbersOrdinalPluralOnes: [
         "zeroth", "first", "seconds", "thirds", "fourths", "fifths", "sixths", "sevenths", "eights", "ninths",
         "tenths", "elevenths", "twelfths", "thirteenths", "fourteenths", "fifteenths", "sixteenths",
