@@ -905,12 +905,12 @@
   - bookmark: "*[1]/@id"
   - test:
     - if: ".='s'"
-      then: [{t: "solid"}]
+      then: [{t: "kiinteä"}]
     - else_if: ".='l'"
-      then: [{t: "liquid"}]
+      then: [{t: "neste"}]
     - else_if: ".='g'"
-      then: [{t: "gas"}]
-      else: [{t: "aqueous"}] # (aq)
+      then: [{t: "kaasu"}]
+      else: [{t: "veteen liuennut"}] # (aq)
   - pause: short
 
 - name: chemical-formula-operator
