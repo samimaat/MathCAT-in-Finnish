@@ -383,39 +383,39 @@
       then: [{t: nuoli oikealle ylös}, {pause: short}]
   - test:
       if: ".[contains(@notation,'updownarrow')]"
-      then: [{t: double ended vertical arrow}, {pause: short}]
+      then: [{t: nuolet ylös-alas}, {pause: short}]
   - test:
       if: ".[contains(@notation,'leftrightarrow')]"
-      then: [{t: double ended horizontal arrow}, {pause: short}]
+      then: [{t: nuolet vasen-oikea}, {pause: short}]
   - test:
       if: ".[contains(@notation,'northeastsouthwestarrow')]"
-      then: [{t: double ended up diagonal arrow}, {pause: short}]
+      then: [{t: nuolet vasemmalle viistoon}, {pause: short}]
   - test:
       if: ".[contains(@notation,'northwestsoutheastarrow')]"
-      then: [{t: double ended down diagonal arrow}, {pause: short}]
+      then: [{t: nuolet oikealle viistoon}, {pause: short}]
   - test:
       if: ".[contains(@notation,'actuarial')]"
-      then: [{t: actuarial symbol}, {pause: short}]
+      then: [{t: akturaarimerkki}, {pause: short}]
   - test:
       if: ".[contains(@notation,'madrub')]"
-      then: [{t: arabic factorial symbol}, {pause: short}]
+      then: [{t: arabialainen kertoma}, {pause: short}]
   - test:
       if: ".[contains(@notation,'phasorangle')]"
-      then: [{t: phasor angle}, {pause: short}]
+      then: [{t: vaihevektorin kulma}, {pause: short}] # check Finnish translation
   - test:
       if: ".[contains(@notation,'longdiv') or not(@notation) or normalize-space(@notation) ='']" # default
-      then: [{t: long division symbol}, {pause: short}]
+      then: [{t: jakokulma}, {pause: short}]
   - test:
       if: ".[contains(@notation,'radical')]"
-      then: [{t: square root}, {pause: short}]
-  - t: enclosing
+      then: [{t: neliöjuuri}, {pause: short}]
+  - t: alku
   - test:
       if: "*[self::m:mtext and text()=' ']"
-      then: [t: "some space"]     # otherwise there is complete silence
+      then: [t: "tyhjää tilaa"]     # otherwise there is complete silence
       else: [x: "*"]
   - test:
       if: "$Impairment = 'Blindness' and ( $SpeechStyle != 'SimpleSpeak' or not(IsNode(*[1], 'leaf')) )"
-      then: [{t: end enclosure}]
+      then: [{t: loppu}]
   - pause: short
 
 - name: semantics
