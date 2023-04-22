@@ -453,7 +453,7 @@
       - t: "joukko"
       - test:
           if: $ClearSpeak_Sets != 'woAll'
-          then: [{t: all}]
+          then: [{t: kaikilla}]
       - x: "*[1]/*[1]"
       - t: "siten että"
       - x: "*[1]/*[3]"
