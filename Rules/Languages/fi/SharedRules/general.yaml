@@ -683,7 +683,7 @@
           then: {t: determinantti}
           else: {t: matriisi}
       - t: end
-      
+
 - name: chemistry-msub
 
   tag: [chemical-formula]
@@ -692,10 +692,10 @@
   - x: "*[2]"
   - test:
       if: "$Verbosity='Verbose'"
-      then: [{t: "subscript"}]
+      then: [{t: "alaindeksi"}]
       else_test:
         if: "$Verbosity='Medium'"
-        then: [{t: "sub"}]
+        then: [{t: "ala"}]
   - x: "*[3]"
 
 - name: chemistry-msup
@@ -705,10 +705,10 @@
   - x: "*[2]"
   - test:
       if: "$Verbosity='Verbose'"
-      then: [{t: "superscript"}]
+      then: [{t: "yläindeksi"}]
       else_test:
         if: "$Verbosity='Medium'"
-        then: [{t: "super"}]
+        then: [{t: "ylä"}]
   - x: "*[3]"
   - test:
       if: "following-sibling::*[1][text()='+' or text()='-']" # a little lazy -- assumes chemistry superscripts end with + or -
