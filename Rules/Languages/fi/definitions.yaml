@@ -30,10 +30,11 @@
         "seitsemäntoista", "kahdeksantoista", "yhdeksäntoista"
     ],
 
+# In Finnish regularity starts after "kahdestoista", ("twelfth"). How to handle?
     NumbersOrdinalOnes: [
-        "zeroth", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth",
-        "tenth", "eleventh", "twelfth", "thirteenth", "fourteenth", "fifteenth", "sixteenth",
-        "seventeenth", "eighteenth", "nineteenth"
+        "nollannes", "ensimmäinen", "toinen", "kolmas", "neljäs", "viides", "kuudes", "seitsemäs", "kahdeksas", "yhdeksäs",
+        "kymmenes", "yhdestoista", "kahdestoista", "kolmastoista", "neljästoista", "viidestoista", "kuudestoista",
+        "seitsemästoista", "kahdeksestoista", "yhdeksästoista"
     ],
 
     NumbersOrdinalPluralOnes: [
