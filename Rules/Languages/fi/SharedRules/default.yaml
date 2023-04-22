@@ -359,28 +359,28 @@
       - pause: short
   - test:
       if: ".[contains(@notation,'uparrow')]"
-      then: [{t: up arrow}, {pause: short}]
+      then: [{t: nuoli ylös}, {pause: short}]
   - test:
       if: ".[contains(concat(' ', normalize-space(@notation), ' '), ' downarrow ')]"
-      then: [{t: down arrow}, {pause: short}]
+      then: [{t: nuoli alas}, {pause: short}]
   - test:
       if: ".[contains(@notation,'leftarrow')]"
-      then: [{t: left arrow}, {pause: short}]
+      then: [{t: nuoli vasemmalle}, {pause: short}]
   - test:
       if: ".[contains(concat(' ', normalize-space(@notation), ' '), ' rightarrow ')]"
-      then: [{t: right arrow}, {pause: short}]
+      then: [{t: nuoli oikealle}, {pause: short}]
   - test:
       if: ".[contains(@notation,'northeastarrow')]"
-      then: [{t: northeast arrow}, {pause: short}]
+      then: [{t: nuoli vasemmalle ylös}, {pause: short}]
   - test:
       if: ".[contains(concat(' ', normalize-space(@notation), ' '), ' southeastarrow ')]"
-      then: [{t: southeast arrow}, {pause: short}]
+      then: [{t: nuoli vasemmalle alas}, {pause: short}]
   - test:
       if: ".[contains(concat(' ', normalize-space(@notation), ' '), ' southwestarrow ')]"
-      then: [{t: southwest arrow}, {pause: short}]
+      then: [{t: nuoli oikealle alas}, {pause: short}]
   - test:
       if: ".[contains(@notation,'northwestarrow')]"
-      then: [{t: northwest arrow}, {pause: short}]
+      then: [{t: nuoli oikealle ylös}, {pause: short}]
   - test:
       if: ".[contains(@notation,'updownarrow')]"
       then: [{t: double ended vertical arrow}, {pause: short}]
