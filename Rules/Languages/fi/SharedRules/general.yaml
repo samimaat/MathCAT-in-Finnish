@@ -569,18 +569,18 @@
   variables: [{IsColumnSilent: true()}]
   match: "*[self::m:mtr][count(*) = 1]"
   replace:
-  - t: the
+  # - t: the
   - x: "count(*)"
-  - t: by 1 column
+  - t: kertaa 1 sarake
   - test:
       if: "$ClearSpeak_Matrix = 'Vector' or $ClearSpeak_Matrix = 'EndVector'"
-      then: {t: vector}
-      else: {t: matrix}
+      then: {t: vektori}
+      else: {t: matriisi}
   - pause: long
   - x: "*" # select the rows (mtr)
   - test:
       if: "$ClearSpeak_Matrix = 'EndMatrix' or $ClearSpeak_Matrix = 'EndVector'"
-      then: [{t: "end matrix"}]
+      then: [{t: "matriisi loppu"}]
 
 - name: 1x2-or-3-matrix
   tag: matrix
