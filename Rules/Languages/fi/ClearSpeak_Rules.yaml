@@ -299,12 +299,12 @@
   match: "*[2][self::m:mi][string-length(.)=1]"
   replace:
   - x: "*[1]"
-  - t: "to the"
+  - t: "potenssiin"
   - x: "*[2]"
-  - pronounce: [{text: "-th"}, {ipa: "θ"}, {sapi5: "th"}, {eloquence: "T"}]
-  - test:
-      if: "$ClearSpeak_Exponents != 'Ordinal'"
-      then: [{t: "power"}]
+  - pronounce: [{text: "-th"}, {ipa: "θ"}, {sapi5: "th"}, {eloquence: "T"}] # context?
+  # - test:
+  #     if: "$ClearSpeak_Exponents != 'Ordinal'"
+  #     then: [{t: "power"}]
 
 # match nested exponent, where the nested exponent is has the power 2 or 3 (n below)
 #   [xxx]^n, - [xxx]^n, [xxx] var^n, -[xxx] var^n
@@ -329,9 +329,8 @@
   - "    ]"
   replace:
   - x: "*[1]"
-  - t: "raised to the"
+  - t: "korotettuna potenssiin"
   - x: "*[2]"
-  - t: "power"
 
 - # - [xxx]^n
   name: nested-negative-squared-or-cubed
@@ -350,9 +349,8 @@
   - "     ]"
   replace:
   - x: "*[1]"
-  - t: "raised to the"
+  - t: "korotettuna potenssiin"
   - x: "*[2]"
-  - t: "power"
 
 - # [xxx] var^n
   name: nested-var-squared-or-cubed
@@ -373,9 +371,8 @@
   - "      ]"
   replace:
   - x: "*[1]"
-  - t: "raised to the"
+  - t: "korotettuna potenssiin"
   - x: "*[2]"
-  - t: "power"
 
 - # -[xxx] var^n
   name: nested-negative-var-squared-or-cubed
@@ -398,9 +395,8 @@
   - "      ]"
   replace:
   - x: "*[1]"
-  - t: "raised to the"
+  - t: "korotettuna potenssiin"
   - x: "*[2]"
-  - t: "power"
 
 - name: default-exponent-power
   tag: power
@@ -408,20 +404,19 @@
   - "*[2][self::m:power or self::m:power or self::m:mrow[m:power]]"
   replace:
   - x: "*[1]"
-  - t: "raised to the exponent"
+  - t: "korotettuna potenssiin"
   - pause: short
   - x: "*[2]"
   - pause: short
-  - t: end exponent
+  - t: potenssi loppu
 
 - name: default
   tag: power
   match: "."
   replace:
   - x: "*[1]"
-  - t: "raised to the"
+  - t: "korotettuna potenssiin"
   - x: "*[2]"
-  - t: "power"
 
 #
 # Some rules on mrows
