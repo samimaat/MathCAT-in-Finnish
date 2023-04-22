@@ -92,8 +92,8 @@
     ],
       
     NumbersOrdinalLarge: [
-        "", "thousandth", "millionth", "billionth", "trillionth", "quadrillionth",
-        "quintillionth", "sextillionth", "septillionth", "octillionth", "nonillionth"
+        "", "tuhannes", "miljoonas", "miljardis", "biljoonas", "tuhannes biljoonas",
+        "triljoonas", "tuhannes triljoonas", "kvadriljoonas", "tuhannes kvadriljoonas", "kvintiljoonas"
     ],
       
     NumbersOrdinalPluralLarge: [
