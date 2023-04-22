@@ -196,11 +196,11 @@
   replace:
   - test:
       if: $ClearSpeak_Trig = 'TrigInverse'
-      then: [{x: "*[1]"}, {bookmark: "*[2]/@id"}, {t: inverse}]
+      then: [{x: "*[1]"}, {bookmark: "*[2]/@id"}, {t: käänteinen}]
       else_test:
         if: $ClearSpeak_Trig = 'ArcTrig'
         then: [{bookmark: "*[2]/@id"}, {t: arc}, {x: "*[1]"}]
-        else: [{bookmark: "*[2]/@id"}, {t: inverse}, {x: "*[1]"}] # default/Auto
+        else: [{bookmark: "*[2]/@id"}, {t: käänteinen}, {x: "*[1]"}] # default/Auto
 
 - name: function-squared-or-cubed
   tag: power
@@ -212,22 +212,19 @@
   - bookmark: "*[2]/@id"
   - test:
       if: "*[2][text()='2']"
-      then: {t: squared}
-      else: {t: cubed}
+      then: {t: neliöön}
+      else: {t: kuutioon}
 - name: function-power
   tag: power
   match:
   - "following-sibling::*[1][self::m:mo][text()='⁡']" #invisible function apply
   replace:
-  - test:
-      if: "$Verbosity!='Terse'"
-      then: {t: the}
   - bookmark: "*[2]/@id"
   - test:
       if: "*[2][self::m:mn][not(contains(., '.'))]"
       then: [{x: "ToOrdinal(*[2])"}]
       else: [{x: "*[2]"}]
-  - t: "power of"
+  - t: "potenssi" # test translation, eng. "power of"
   - pause: short
   - x: "*[1]"
 
@@ -238,18 +235,18 @@
   - "*[2][self::m:power or self::m:power or self::m:mrow[m:power]]"
   replace:
   - x: "*[1]"
-  - t: "raised to the exponent"
+  - t: "korotettuna potenssiin"
   - pause: short
   - x: "*[2]"
   - pause: short
-  - t: "end exponent"
+  - t: "potenssi loppu"
 
 - name: AfterPower-default
   tag: power
   match: "$ClearSpeak_Exponents = 'AfterPower'"
   replace:
   - x: "*[1]"
-  - t: "raised to the power"
+  - t: "korotettuna potenssiin"
   - x: "*[2]"
   - pause: short
 
@@ -259,7 +256,7 @@
   replace:
   - x: "*[1]"
   - bookmark: "*[2]/@id"
-  - t: "squared"
+  - t: "neliöön"
 
 - name: cubed
   tag: power
@@ -267,9 +264,9 @@
   replace:
   - x: "*[1]"
   - bookmark: "*[2]/@id"
-  - t: "cubed"
+  - t: "kuutioon"
 
-- name: simple-integer
+- name: simple-integer # needs more thinking to translate, probably have to rearrange
   tag: power
   match: "*[2][self::m:mn][not(contains(., '.'))]"
   replace:
@@ -291,11 +288,11 @@
   - "    ]"
   replace:
   - x: "*[1]"
-  - t: "to the"
+  - t: "potenssiin"
   - x: "*[2]"
-  - test:
-      if: "$ClearSpeak_Exponents != 'Ordinal'"
-      then: [{t: "power"}]
+  # - test:
+  #     if: "$ClearSpeak_Exponents != 'Ordinal'"
+  #     then: [{t: "power"}]
 
 - name: simple-var
   tag: power
