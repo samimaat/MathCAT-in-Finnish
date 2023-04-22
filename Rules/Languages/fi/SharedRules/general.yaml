@@ -591,47 +591,47 @@
   - count(*[1]/*)<=3 and # at least two cols
   - IsNode(*/*/*,'simple') # IsNode() returns true if all the nodes are simple
   replace:
-  - t: the 1 by
+  - t: 1 kertaa
   - x: count(*/*)
-  - t: "row"
+  - t: "rivi"
   - test:
       if: "$ClearSpeak_Matrix = 'Vector' or $ClearSpeak_Matrix = 'EndVector'"
-      then: {t: vector}
-      else: {t: matrix}
+      then: {t: vektori}
+      else: {t: matriisi}
   - pause: long
   - x: "*/*"
   - test:
       if: "$ClearSpeak_Matrix = 'EndMatrix' or $ClearSpeak_Matrix = 'EndVector'"
       then:
-      - t: "end"
       - test:
           if: $ClearSpeak_Matrix = 'EndMatrix'
-          then: {t: matrix}
-          else: {t: vector}
+          then: {t: matriisi}
+          else: {t: vektori}
+      - t: "loppu"
 
 - name: default-row-matrix
   tag: matrix
   variables: [{IsColumnSilent: "$SpeechStyle = 'ClearSpeak' and $ClearSpeak_Matrix = 'SilentColNum'"}]
   match: "count(*)=1" # one row
   replace:
-  - t: the 1 by
+  - t: 1 kertaa
   - x: "count(*/*)"
-  - t: "row"
+  - t: "rivi"
   - test:
       if: "$ClearSpeak_Matrix = 'Vector' or $ClearSpeak_Matrix = 'EndVector'"
-      then: {t: vector}
-      else: {t: matrix}
+      then: {t: vektori}
+      else: {t: matriisi}
   - pause: long
   - pause: medium
   - x: "*/*" # select the cols (mtd)
   - test:
       if: "$ClearSpeak_Matrix = 'EndMatrix' or $ClearSpeak_Matrix = 'EndVector'"
       then:
-      - t: "end"
       - test:
           if: $ClearSpeak_Matrix = 'EndMatrix'
-          then: {t: matrix}
-          else: {t: vector}
+          then: {t: matriisi}
+          else: {t: vektori}
+      - t: "loppu"
 
 - name: simple-small-matrix
   tag: [matrix, determinant]
