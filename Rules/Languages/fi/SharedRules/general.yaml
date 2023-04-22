@@ -546,23 +546,23 @@
   - count(*)<=3 and # at least two rows
   - IsNode(*/*/*,'simple') # IsNode() returns true if all the nodes are simple
   replace:
-  - t: the
+  # - t: the
   - x: count(*)
-  - t: by 1 column
+  - t: kertaa 1 sarake
   - test:
       if: "$ClearSpeak_Matrix = 'Vector' or $ClearSpeak_Matrix = 'EndVector'"
-      then: {t: vector}
-      else: {t: matrix}
+      then: {t: vektori}
+      else: {t: matriisi}
   - pause: long
   - x: "*/*"
   - test:
       if: "$ClearSpeak_Matrix = 'EndMatrix' or $ClearSpeak_Matrix = 'EndVector'"
       then:
-      - t: "end"
+      - t: "loppu"
       - test:
           if: $ClearSpeak_Matrix = 'EndVector'
-          then: {t: vector}
-          else: {t: matrix}
+          then: {t: vektori}
+          else: {t: matriisi}
 
 - name: default-column-matrix
   tag: matrix
