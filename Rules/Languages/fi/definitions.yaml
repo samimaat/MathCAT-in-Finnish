@@ -100,4 +100,6 @@
         "quintillionths", "sextillionths", "septillionths", "octillionths", "nonillionths"
     ]
 
+    # New code for Finnish for cases "kaksisataatuhatta". Thousands are conjugated because of preceding words.
+
 ]
