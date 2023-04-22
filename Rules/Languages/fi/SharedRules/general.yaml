@@ -133,9 +133,9 @@
   - test:
       if: "$Verbosity!='Terse'"
       then:
-      - t: "from"
+      - t: "välillä"
       - x: "*[1]"
-      - t: "to"
+      - t: "pilkku"
       - x: "*[2]"
       else:
       - x: "*[1]"
