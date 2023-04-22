@@ -940,14 +940,14 @@
     - if: "text()='→' or text()='⟶'"
       then_test:
         if: "name(preceding-sibling::*[1]) = 'chemical-nuclide'"
-        then: [{t: "decays to"}]
-        else: [{t: "yields"}]
+        then: [{t: "hajoaa"}]
+        else: [{t: "reagoi"}] # eng. "yields", better translation for Finnish?
     - else_if: "text()='⇌' or text()='⮖'"
-      then: [{t: "is in equilibrium with"}]
+      then: [{t: "on tasapainossa"}]
     - else_if: "text()='⭴'"
-      then: [{t: "is in equilibrium biased to the left with"}]
+      then: [{t: "on tasapainoasemassa vasemmalle"}]
     - else_if: "text()='⭵'"
-      then: [{t: "is in equilibrium biased to the right with"}]
+      then: [{t: "on tasapainoasemassa oikealle"}]
       else: [{x: text()}]
 
 - name: none
