@@ -68,9 +68,9 @@
         "", "tenths", "twentieths", "thirtieths", "fortieths", "fiftieths", "sixtieths", "seventieths", "eightieths", "ninetieths"
     ],
 
-
-    NumbersHundreds: ["", "one hundred", "two hundred", "three hundred", "four hundred", "five hundred",
-        "six hundred", "seven hundred", "eight hundred", "nine hundred"
+# In Finnish these would be compound word, but for pronunciation they are written separately.
+    NumbersHundreds: ["", "sata", "kaksi sataa", "kolme sataa", "neljä sataa", "viisi sataa",
+        "kuusi sataa", "seitsemän sataa", "kahdeksan sataa", "yhdeksän sataa"
     ],
 
     NumbersOrdinalHundreds: ["", "one hundredth", "two hundredth", "three hundredth", "four hundredth", "five hundredth",
