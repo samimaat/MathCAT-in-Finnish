@@ -366,8 +366,8 @@
   - bookmark: "@id"
   - test:
       if: "$Verbosity='Terse'"
-      then: {t: sinch}
-      else: {t: hyperbolic sine}
+      then: {t: sinh}
+      else: {t: hyperbolinen sini}
 - name: cosh
   tag: mi
   match: "text()='cosh'"
@@ -376,7 +376,7 @@
   - test:
       if: "$Verbosity='Terse'"
       then: {t: cosh}
-      else: {t: hyperbolic cosine}
+      else: {t: hyperbolinen cos}
 - name: tanh
   tag: mi
   match: "text()='tanh'"
@@ -384,8 +384,8 @@
   - bookmark: "@id"
   - test:
       if: "$Verbosity='Terse'"
-      then: {t: tanch}
-      else: {t: hyperbolic tangent}
+      then: {t: tanh}
+      else: {t: hyperbolinen tangentti}
 - name: sech
   tag: mi
   match: "text()='sech'"
@@ -393,8 +393,8 @@
   - bookmark: "@id"
   - test:
       if: "$Verbosity='Terse'"
-      then: {t: sheck}
-      else: {t: hyperbolic secant}
+      then: {t: sekh}
+      else: {t: hyperbolinen sekantti}
 - name: csch
   tag: mi
   match: "text()='csch'"
@@ -402,8 +402,8 @@
   - bookmark: "@id"
   - test:
       if: "$Verbosity='Terse'"
-      then: {t: co-sheck}
-      else: {t: hyperbolic co-secant}
+      then: {t: kosekh}
+      else: {t: hyperbolinen kosekantti}
 - name: coth
   tag: mi
   match: "text()='coth'"
@@ -411,8 +411,8 @@
   - bookmark: "@id"
   - test:
       if: "$Verbosity='Terse'"
-      then: {t: co-tanch}
-      else: {t: hyperbolic co-tangent}
+      then: {t: kotanh}
+      else: {t: hyperbolinen kotangentti}
 
 - # handle both log and ln
   name: log
