@@ -113,11 +113,10 @@
       if: "not(IsNode(*[1], 'leaf'))"
       then: [{t: "modified"}]
   - x: "*[1]"
-  - t: "with"
+  - t: "alla"
   - x: "*[2]"
-  - t: "below and"
+  - t: "ja yllä"
   - x: "*[3]"
-  - t: "above"
 
 - name: default
   #   Here we support up to 2 prescripts and up to 4 postscripts -- that should cover all reasonable cases
