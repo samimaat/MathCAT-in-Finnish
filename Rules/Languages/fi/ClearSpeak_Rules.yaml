@@ -475,9 +475,9 @@
   tag: [open-interval, open-closed-interval, closed-interval, closed-open-interval]
   match: "."
   replace:
-  - t: the interval from
+  - t: väli
   - x: "*[1]"
-  - t: to
+  - t: pilkku
   - x: "*[2]"
   - pause: short
   - test:
@@ -485,18 +485,18 @@
       then:
       - test:
           if: "starts-with(name(.), 'open')"
-          then: [{t: "not"}]
-      - t: "including"
+          then: [{t: "ei"}] # Finnish: test how this sounds, and think about new ways to do it
+      - t: "sisältää"
       - x: "*[1]"
     # logic to deal with [not] arg #1
   - test:
       if: "not($is_intervals_start_infinity or $is_intervals_end_infinity)"
       then_test:
       - if: "name(.)='open-interval'"
-        then: [{t: or}]
+        then: [{t: tai}]
       - else_if: "name(.)='closed-interval'"
-        then: [{t: and}]
-        else: [{t: but}]
+        then: [{t: ja}]
+        else: [{t: mutta}]
     # some ugly logic dealing with connectives: or, but, but, and (cleaner to be part of next clause?)
   - test:
       if: not($is_intervals_end_infinity)
@@ -507,8 +507,8 @@
           then:
           - test:
               if: "name(.) = 'open-interval' or name(.) = 'closed-open-interval'"
-              then: [{t: "not"}]
-          - t: "including"
+              then: [{t: "ei"}]
+          - t: "sisältää"
       - x: "*[2]"
 
     # onto the [not] [including]... part
@@ -519,19 +519,19 @@
   - "count(*[1]/*)=1 and count(*)=2"
   replace:
   - x: "*[1]/*[1]/*" # mtable/mtr/mtd
-  - t: choose
+  - t: yli
   - x: "*[2]/*[1]/*"
 
 - name: ClearSpeak-default
   tag: [mtr, mlabeledtr]
   match: "parent::m:matrix or parent::m:determinant"
   replace:
-  - t: "row"
+  - t: "rivi"
   - x: "count(preceding-sibling::*)+1"
   - test:
       if: .[self::m:mlabeledtr]
       then:
-      - t: with label
+      - t: nimikkeellä
       - x: "*[1]/*"
       - pause: short
   - pause: medium
@@ -550,7 +550,7 @@
       #   if: not($IsColumnSilent) and ($ClearSpeak_Matrix = 'SpeakColNum' or count(preceding-sibling::*) != 0)
       if: "not($IsColumnSilent)"
       then:
-      - t: column
+      - t: sarake
       - x: "count(preceding-sibling::*)+1"
       - pause: medium
   - x: "*"
@@ -577,19 +577,15 @@
       - if: "*[1][text()='log']"
         then: [{t: log}]
       - else_if: $ClearSpeak_Log = 'LnAsNaturalLog'
-        then: [{t: natural log}]
+        then: [{t: luonnollinen log}]
         else: [{spell: "'ln'"}]
       else:
-      - test:
-          if: "$Verbosity!='Terse' and not(log_is_simple)"
-          then: {t: the}
       - test:
         - if: "*[1][text()='log']"
           then: [{t: log}]
         - else_if: $ClearSpeak_Log = 'LnAsNaturalLog'
-          then: [{t: natural log}]
+          then: [{t: luonnollinen log}]
           else: [{spell: "'ln'"}]
-      - t: of
       - pause: short
   - x: "*[3]"
 
