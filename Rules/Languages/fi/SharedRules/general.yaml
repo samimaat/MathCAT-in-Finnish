@@ -5,14 +5,14 @@
   tag: number-sets
   match: "*[2][text()='+' or text()='-']"
   replace:
-  - test:
-      if: "$Verbosity!='Terse'"
-      then:
-      - t: "the" # not needed in Finnish?
+  # - test:
+  #     if: "$Verbosity!='Terse'"
+  #     then:
+  #     - t: "" # not needed in Finnish
   - bookmark: "*[2]/@id"
   - test:
     - if: "*[2][text()='+']"
-      then: [{t: "postiivinen"}]
+      then: [{t: "positiivinen"}]
       else: [{t: "negatiivinen"}]
   - bookmark: "*[1]/@id"
   - test:
@@ -57,15 +57,15 @@
   - bookmark: "@id"
   - test:
     - if: "text()='ℂ'"
-      then: [{t: the complex numbers}]
+      then: [{t: kompleksiluvut}]
     - else_if: "text()='ℕ'"
-      then: [{t: the natural numbers}]
+      then: [{t: luonnolliset luvut}]
     - else_if: "text()='ℚ'"
-      then: [{t: the rational numbers}]
+      then: [{t: rationaaliluvut}]
     - else_if: "text()='ℝ'"
-      then: [{t: the real numbers}]
+      then: [{t: reaaliluvut}]
     - else_if: "text()='ℤ'"
-      then: [{t: the integers}]
+      then: [{t: kokonaisluvut}]
       else: [{x: text()}] # shouldn't happen
 
 - name: real-part
@@ -73,14 +73,14 @@
   match: "."
   replace:
   - bookmark: "@id"
-  - t: the real part
+  - t: reaaliosa
 
 - name: imaginary-part
   tag: imaginary-part
   match: "."
   replace:
   - bookmark: "@id"
-  - t: the imaginary part
+  - t: imaginaariosa
 
 # rules on scripted vertical bars ('evaluated at')
 - name: evaluated-at-2
