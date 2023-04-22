@@ -641,24 +641,24 @@
   - IsNode(*/*/*,'simple') # IsNode() returns true if all the nodes are simple
   variables: [{IsColumnSilent: "$SpeechStyle = 'ClearSpeak' and $ClearSpeak_Matrix != 'SpeakColNum'"}]
   replace:
-  - t: the
+  # - t: the
   - x: count(*)
-  - t: by
+  - t: kertaa
   - x: count(*[self::m:mtr][1]/*)
   - test:
       if: "self::m:determinant"
-      then: {t: determinant}
-      else: {t: matrix}
+      then: {t: determinantti}
+      else: {t: matriisi}
   - pause: long
   - x: "*"
   - test:
       if: "$ClearSpeak_Matrix = 'EndMatrix' or $ClearSpeak_Matrix = 'EndVector'"
       then:
-      - t: end
       - test:
           if: "self::m:determinant"
-          then: {t: determinant}
-          else: {t: matrix}
+          then: {t: determinantti}
+          else: {t: matriisi}
+      - t: end
 
 - name: default-matrix
   tag: [matrix, determinant]
@@ -671,19 +671,19 @@
   - x: "count(*[self::m:mtr][1]/*)"
   - test:
       if: "self::m:determinant"
-      then: {t: determinant}
-      else: {t: matrix}
+      then: {t: determinantti}
+      else: {t: matriisi}
   - pause: long
   - x: "*"
   - test:
       if: "$ClearSpeak_Matrix = 'EndMatrix' or $ClearSpeak_Matrix = 'EndVector'"
       then:
-      - t: end
       - test:
           if: "self::m:determinant"
-          then: {t: determinant}
-          else: {t: matrix}
-
+          then: {t: determinantti}
+          else: {t: matriisi}
+      - t: end
+      
 - name: chemistry-msub
 
   tag: [chemical-formula]
